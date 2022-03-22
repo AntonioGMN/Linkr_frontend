@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Tineline from "./pages/Timeline";
+import Timeline from "./pages/Timeline";
 
 export default function App() {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Tineline />} />
-			</Routes>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/timeline" element={<Timeline />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
