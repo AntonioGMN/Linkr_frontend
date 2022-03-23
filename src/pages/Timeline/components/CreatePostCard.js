@@ -34,7 +34,6 @@ export default function CreatePostCard() {
           placeholder="Awesome article about #javascript"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          required
         />
         <div>
           <button type="submit" disabled={loading}>
