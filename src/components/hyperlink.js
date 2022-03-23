@@ -6,6 +6,8 @@ const Hyperlink = styled(Link)`
   font-size: 20px;
   color: white;
 
+  text-decoration: underline;
+
   cursor: ${({ disabled }) => (disabled ? "auto" : "pointer")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 `;

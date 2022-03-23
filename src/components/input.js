@@ -13,7 +13,15 @@ const Input = styled.input`
   font-family: Oswald;
   font-weight: bold;
   font-size: 27px;
-  color: #9f9f9f;
+  color: #151515;
+
+  ::placeholder {
+    color: #9f9f9f;
+  }
+
+  /* @media (max-width: 1000px) {
+    width: 100%;
+  } */
 `;
 
 export default Input;

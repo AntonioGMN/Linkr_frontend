@@ -19,6 +19,10 @@ const Button = styled.button`
   color: white;
 
   cursor: pointer;
+
+  /* @media (max-width: 1000px) {
+    width: 100%;
+  } */
 `;
 
 export default Button;
