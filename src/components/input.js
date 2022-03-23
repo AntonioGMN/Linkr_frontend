@@ -5,7 +5,7 @@ const Input = styled.input`
   box-sizing: border-box;
 
   padding: 0 17px;
-  width: 429px;
+  width: 100%;
   height: 65px;
   border-radius: 6px;
   background-color: white;
@@ -13,7 +13,11 @@ const Input = styled.input`
   font-family: Oswald;
   font-weight: bold;
   font-size: 27px;
-  color: #9f9f9f;
+  color: #151515;
+
+  ::placeholder {
+    color: #9f9f9f;
+  }
 `;
 
 export default Input;
