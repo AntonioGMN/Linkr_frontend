@@ -41,7 +41,7 @@ const Aside = styled.aside`
   }
 `;
 
-const FormContainer = styled.form`
+const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

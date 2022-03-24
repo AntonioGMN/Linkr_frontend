@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import { Aside, FormContainer, LoginContainer, LoginForm, StyledLink } from "./styles";
@@ -5,6 +6,21 @@ import { Aside, FormContainer, LoginContainer, LoginForm, StyledLink } from "./s
 //CONVERSAR COM O JEFF E COMITAR O LAYOUT DESKTOP ANTES DE AVANÇAR
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+ 
+  function handleChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    console.log(formData)
+  }
+
   return (
     <LoginContainer>
       <Aside>
@@ -12,12 +28,22 @@ export default function Login() {
         <p>save, share and discover<br/>the best links on the web</p>
       </Aside>
       <FormContainer>
-        <LoginForm>
+        <LoginForm onSubmit={handleSubmit}>
           <Input 
             placeholder="e-mail"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
           />
           <Input 
             placeholder="password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
           />
           <Button>Log In</Button>
         </LoginForm>
