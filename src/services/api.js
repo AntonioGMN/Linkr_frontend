@@ -12,6 +12,8 @@ const signUp = async (newUser) => instance.post("/users", newUser);
 
 const publish = async (post, token) => instance.post("/posts", post, createAuth(token));
 
-const api = { signUp , publish};
+const  signIn= async (userData) => instance.post("/users/authentication", userData);
+
+const api = { signUp, signIn,publish };
 
 export default api;

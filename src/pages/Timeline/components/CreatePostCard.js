@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import useAuth from "../../../hooks/useAuth";
 import api from "../../../services/api";
 
 export default function CreatePostCard() {
@@ -7,11 +8,12 @@ export default function CreatePostCard() {
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { auth } = useAuth();
   function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     api
-      .publish({ text, link }, "f1854f05-0905-4028-8ad9-7d45cc6b366d")
+      .publish({ text, link }, auth.token)
       .then(() => {
         window.location.reload();
         setLoading(false);
@@ -26,7 +28,7 @@ export default function CreatePostCard() {
     <Container>
       <div>
         <Avatar
-          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+          src={auth.userPicture}
           alt="avatar"
         />
       </div>
@@ -80,7 +82,7 @@ const Avatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 26.5px;
-  object-fit: scale-down;
+  object-fit: cover;
 
   @media (max-width: 600px) {
     display: none;
@@ -148,15 +150,16 @@ const Form = styled.form`
   }
 
   @media (max-width: 600px) {
-    justify-content:center;
-    align-items:center;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    input,textarea {
+    input,
+    textarea {
       width: 90%;
       font-size: 14px;
     }
-    button{
-      height:24px;
+    button {
+      height: 24px;
     }
   }
 `;
