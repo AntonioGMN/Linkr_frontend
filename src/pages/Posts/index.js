@@ -1,42 +1,45 @@
-import { PostsStyle } from "../../components/posts";
-//import Curtidas from "../../components/curtidas";
-//import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
+import { PostsStyle, Snippet, ErroMensagem } from "../../components/posts";
 import { useEffect, useState } from "react";
 import { getPosts } from "../../Services/axiosServices";
 import Post from "./Post";
 
 export default function Posts() {
 	const [posts, setPosts] = useState(null);
+	const [isError, setIsError] = useState(false);
 
-	console.log(posts);
-
-	async function pegar() {
-		try {
-			const promise = await getPosts();
-			return setPosts(promise);
-		} catch (err) {
-			console.log(err);
-			alert(
-				"An error occured while trying to fetch the posts, please refresh the page"
-			);
-		}
-	}
-
-	useEffect(() => {
-		pegar();
+	useEffect(async () => {
+		const promise = getPosts();
+		console.log(promise);
+		promise.then((response) => setPosts(response.data));
+		promise.catch(() => setIsError(true));
 	}, []);
 
-	//console.log("typeof " + typeof posts);
+	console.log(posts);
 	if (posts === null) {
-		return <PostsStyle>Carregando</PostsStyle>;
+		return (
+			<PostsStyle>
+				<ErroMensagem>Loading</ErroMensagem>
+			</PostsStyle>
+		);
 	}
 
 	if (posts !== null) {
-		console.log(posts);
+		console.log(isError);
+
+		if (posts.isAxisosError) {
+			return (
+				<PostsStyle>
+					<ErroMensagem>
+						An error occured while trying to fetch the posts, please refresh the page
+					</ErroMensagem>
+				</PostsStyle>
+			);
+		}
+
 		if (posts.length === 0) {
 			return (
 				<PostsStyle>
-					<h2>There are no posts yet</h2>
+					<ErroMensagem>There are no posts yet</ErroMensagem>
 				</PostsStyle>
 			);
 		} else {
@@ -47,10 +50,4 @@ export default function Posts() {
 			);
 		}
 	}
-
-	// return (
-	// 	<PostsStyle>
-	// 		<Post />
-	// 	</PostsStyle>
-	// );
 }

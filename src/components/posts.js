@@ -74,10 +74,29 @@ const PostStyle = styled.article`
 const Snippet = styled.a`
 	height: 155px;
 	width: 503px;
-	border-radius: 11px;
 
 	border: 1px solid #4d4d4d;
+	border-radius: 11px;
 	margin-top: 8px;
+
+	color: #ffffff;
 `;
 
-export { PostsStyle, PostStyle, Snippet };
+const ErroMensagem = styled.div`
+	width: 100%;
+	height: 236px;
+	padding: 10px;
+
+	border: 1px solid #4d4d4d;
+	border-radius: 11px;
+	background: #171717;
+
+	font-size: 27px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 40px;
+	text-align: left;
+	color: #b7b7b7;
+`;
+
+export { PostsStyle, PostStyle, Snippet, ErroMensagem };

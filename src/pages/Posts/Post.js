@@ -6,7 +6,7 @@ import { Snippet } from "../../components/posts";
 export default function Post({ list }) {
 	return list.map((p) => {
 		return (
-			<PostStyle>
+			<PostStyle key={p.id}>
 				<section>
 					<img src={p.pictureUrl} alt="erro" />
 					<Curtidas>
