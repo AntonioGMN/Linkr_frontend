@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import Button from "../../components/button";
 import Input from "../../components/input";
-// import { Hyperlink } from "../../components/hyperlink";
-// import { Form, Page, HeaderArea, Header, Title, Subtitle } from "./styles";
 import {
   Aside,
   FormContainer,

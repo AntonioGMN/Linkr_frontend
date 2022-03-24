@@ -4,9 +4,7 @@ const instance = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-async function signUp(newUser) {
-  return instance.post("/users", newUser);
-}
+const signUp = async (newUser) => instance.post("/users", newUser);
 
 const api = { signUp };
 
