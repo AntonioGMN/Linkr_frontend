@@ -7,13 +7,19 @@ import {
   Form,
   StyledLink,
 } from "../../components/authComponents";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
+  const [loading, setLoading] = useState(false);
+  const { auth, login } = useAuth();
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,7 +27,23 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    setLoading(true);
+
+    try{
+      const authData = await api.signIn(formData);
+      login(authData);
+      setLoading(false);
+      navigate("/timeline")
+    } catch (error){
+      setLoading(false);
+      console.log(error)
+    }
   }
+
+  useEffect(() => {
+    if (auth?.token) navigate("/timeline");
+  }, [auth, navigate]);
 
   return (
     <AuthContainer>
@@ -41,6 +63,7 @@ export default function Login() {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            disabled={loading}
             required
           />
           <Input
@@ -49,6 +72,7 @@ export default function Login() {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            disabled={loading}
             required
           />
           <Button>Log In</Button>

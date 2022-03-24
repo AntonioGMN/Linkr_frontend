@@ -8,6 +8,10 @@ async function signUp(newUser) {
   return instance.post("/users", newUser);
 }
 
-const api = { signUp };
+async function signIn(userData) {
+  return instance.post("/users/authentication", userData);
+}
+
+const api = { signUp, signIn };
 
 export default api;
