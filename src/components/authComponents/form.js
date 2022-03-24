@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
-const SignUpForm = styled.form`
+const Form = styled.form`
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 15px;
-
-  width: 100%;
-  min-height: 100vh;
 `;
 
-export { SignUpForm };
+export default Form;

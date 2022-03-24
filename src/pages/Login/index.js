@@ -10,15 +10,13 @@ export default function Login() {
     email: "",
     password: ""
   });
- 
+
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(formData)
   }
 
   return (

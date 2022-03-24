@@ -18,6 +18,12 @@ const Input = styled.input`
   ::placeholder {
     color: #9f9f9f;
   }
+
+  @media (max-width: 1000px) {
+    height: 56px;
+
+    font-size: 22px;
+  }
 `;
 
 export default Input;
