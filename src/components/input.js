@@ -15,10 +15,6 @@ const Input = styled.input`
   font-size: 27px;
   color: #151515;
 
-  :disabled {
-    opacity: 0.7;
-  }
-
   ::placeholder {
     color: #9f9f9f;
   }
