@@ -12,6 +12,7 @@ const TitleStyle = styled.h1`
 
 	position: static;
 	top: 125px;
+	z-index: 2;
 
 	@media (max-width: 1000px) {
 		font-size: 33px;
