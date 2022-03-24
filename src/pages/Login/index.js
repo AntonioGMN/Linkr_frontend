@@ -18,7 +18,7 @@ export default function Login() {
     password: ""
   });
   const [loading, setLoading] = useState(false);
-  const { auth, login } = useAuth();
+  const { auth, persistLogged } = useAuth();
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -31,13 +31,16 @@ export default function Login() {
     setLoading(true);
 
     try{
-      const authData = await api.signIn(formData);
-      login(authData);
+      const { data } = await api.signIn(formData);
+      persistLogged(data);
+      console.log(data)
       setLoading(false);
       navigate("/timeline")
     } catch (error){
       setLoading(false);
       console.log(error)
+      const errorMessage = error.response.data;
+      alert(errorMessage);
     }
   }
 
