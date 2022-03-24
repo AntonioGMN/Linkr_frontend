@@ -2,14 +2,14 @@ import MainDesktop from "../../components/mainDesktop";
 
 import Title from "../Title";
 import Trending from "../trending";
-import Conteiner from "../../components/conteiner";
+import Container from "../../components/container";
 import { Posts, Post } from "../../components/posts";
 import CreatePostCard from "./components/CreatePostCard";
 
-export default function Tineline() {
+export default function Timeline() {
   return (
-    <Conteiner>
-      <Title palavra="timeline"></Title>
+    <Container>
+      <Title title="timeline"></Title>
       <MainDesktop>
         <Posts>
           <CreatePostCard />
@@ -21,6 +21,6 @@ export default function Tineline() {
         </Posts>
         <Trending />
       </MainDesktop>
-    </Conteiner>
+    </Container>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import api from "../../../services/api";
 
 export default function CreatePostCard() {
   const [text, setText] = useState("");
@@ -8,8 +9,17 @@ export default function CreatePostCard() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     setLoading(true);
+    api
+      .publish({ text, link }, "f1854f05-0905-4028-8ad9-7d45cc6b366d")
+      .then(() => {
+        window.location.reload();
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Houve um erro ao publicar seu link");
+        setLoading(false);
+      });
   }
 
   return (
@@ -27,6 +37,7 @@ export default function CreatePostCard() {
           placeholder="http://..."
           value={link}
           onChange={(e) => setLink(e.target.value)}
+          disabled={loading}
           required
         />
         <textarea
@@ -34,6 +45,7 @@ export default function CreatePostCard() {
           placeholder="Awesome article about #javascript"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          disabled={loading}
         />
         <div>
           <button type="submit" disabled={loading}>
@@ -56,6 +68,12 @@ const Container = styled.div`
   padding: 16px;
   display: flex;
   gap: 16px;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 200px;
+    border-radius: 0;
+  }
 `;
 
 const Avatar = styled.img`
@@ -63,6 +81,10 @@ const Avatar = styled.img`
   height: 50px;
   border-radius: 26.5px;
   object-fit: scale-down;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 const Form = styled.form`
   display: flex;
@@ -122,6 +144,19 @@ const Form = styled.form`
     }
     :active {
       transform: translateY(-3px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    justify-content:center;
+    align-items:center;
+    width: 100%;
+    input,textarea {
+      width: 90%;
+      font-size: 14px;
+    }
+    button{
+      height:24px;
     }
   }
 `;
