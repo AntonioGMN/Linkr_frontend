@@ -38,7 +38,6 @@ export default function Login() {
       navigate("/timeline")
     } catch (error){
       setLoading(false);
-      console.log(error)
       const errorMessage = error.response.data;
       alert(errorMessage);
     }
