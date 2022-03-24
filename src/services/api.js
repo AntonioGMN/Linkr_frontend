@@ -6,6 +6,10 @@ const instance = axios.create({
 
 const signUp = async (newUser) => instance.post("/users", newUser);
 
-const api = { signUp };
+async function signIn(userData) {
+  return instance.post("/users/authentication", userData);
+}
+
+const api = { signUp, signIn };
 
 export default api;
