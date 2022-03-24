@@ -4,6 +4,7 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
 
   display: flex;
   justify-content: space-between;
@@ -46,6 +47,7 @@ const LogoutButton = styled.button`
   position: fixed;
   top: 72px;
   right: 0;
+  z-index: 3;
 
   display: flex;
   justify-content: center;
@@ -63,4 +65,14 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
-export { StyledHeader, LogoutButton };
+const LogoutContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+`;
+
+export { StyledHeader, LogoutButton, LogoutContainer };
