@@ -20,6 +20,10 @@ const Button = styled.button`
 
   cursor: pointer;
 
+  :disabled {
+    opacity: 0.7;
+  }
+
   @media (max-width: 1000px) {
     height: 56px;
 

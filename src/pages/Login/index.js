@@ -30,12 +30,17 @@ export default function Login() {
 
     setLoading(true);
 
+    if (!formData.email || !formData.password) {
+      setLoading(false);
+      return alert('All fields must be filled');
+    }
+
     try{
       const { data } = await api.signIn(formData);
       persistLogged(data);
       console.log(data)
       setLoading(false);
-      navigate("/timeline")
+      navigate("/timeline");
     } catch (error){
       setLoading(false);
       const errorMessage = error.response.data;
@@ -66,7 +71,6 @@ export default function Login() {
             value={formData.email}
             onChange={handleChange}
             disabled={loading}
-            required
           />
           <Input
             placeholder="password"
@@ -75,9 +79,8 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
             disabled={loading}
-            required
           />
-          <Button>Log In</Button>
+          <Button disabled={loading}>Log In</Button>
         </Form>
         <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
       </FormContainer>
