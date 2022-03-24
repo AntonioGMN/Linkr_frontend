@@ -1,9 +1,13 @@
-import { useState } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
-import { Aside, FormContainer, LoginContainer, LoginForm, StyledLink } from "./styles";
-
-//CONVERSAR COM O JEFF E COMITAR O LAYOUT DESKTOP ANTES DE AVANÇAR
+import {
+  Aside,
+  FormContainer,
+  AuthContainer,
+  Form,
+  StyledLink,
+} from "../../components/authComponents";
+import { useState } from "react";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -20,13 +24,17 @@ export default function Login() {
   }
 
   return (
-    <LoginContainer>
+    <AuthContainer>
       <Aside>
-        <h1>Linkr</h1>
-        <p>save, share and discover<br/>the best links on the web</p>
+        <h1>linkr</h1>
+        <p>
+          save, share and discover
+          <br />
+          the best links on the web
+        </p>
       </Aside>
       <FormContainer>
-        <LoginForm onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Input 
             placeholder="e-mail"
             type="email"
@@ -35,7 +43,7 @@ export default function Login() {
             onChange={handleChange}
             required
           />
-          <Input 
+          <Input
             placeholder="password"
             type="password"
             name="password"
@@ -44,9 +52,9 @@ export default function Login() {
             required
           />
           <Button>Log In</Button>
-        </LoginForm>
+        </Form>
         <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
       </FormContainer>
-    </LoginContainer>
+    </AuthContainer>
   );
 }
