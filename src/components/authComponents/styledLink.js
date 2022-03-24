@@ -8,6 +8,14 @@ const StyledLink = styled(Link)`
   color: #fff;
   text-decoration: underline solid 1px;
   text-align: center;
+
+  cursor: ${({ disabled }) => (disabled ? "auto" : "pointer")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+
+  @media (max-width: 1000px) {
+    font-size: 17px;
+    line-height: normal;
+  }
 `;
 
 export default StyledLink;

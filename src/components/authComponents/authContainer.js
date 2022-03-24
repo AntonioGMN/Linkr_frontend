@@ -7,6 +7,10 @@ const authContainer = styled(Container)`
 
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 export default authContainer;

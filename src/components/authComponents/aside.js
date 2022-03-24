@@ -28,6 +28,27 @@ const Aside = styled.aside`
     line-height: 64px;
     color: #fff;
   }
+
+  @media (max-width: 1000px) {
+    align-items: center;
+
+    width: 100%;
+    min-height: 175px;
+    height: 175px;
+    padding: 0;
+
+    h1 {
+      font-size: 76px;
+      line-height: normal;
+      letter-spacing: normal;
+    }
+
+    p {
+      font-size: 23px;
+      line-height: normal;
+      text-align: center;
+    }
+  }
 `;
 
 export default Aside;
