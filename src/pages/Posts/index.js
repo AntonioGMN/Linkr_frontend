@@ -9,17 +9,9 @@ export default function Posts() {
 
 	useEffect(() => {
 		const promise = getPosts();
-		console.log(promise);
-		promise.then((response) => {
-			console.log(promise);
-			setPosts(response.data);
-		});
-		promise.catch(() => {
-			console.log(promise);
-			setIsError(true);
-		});
+		promise.then((response) => setPosts(response.data));
+		promise.catch(() => setIsError(true));
 	}, []);
-	console.log(isError);
 
 	console.log(posts);
 	if (posts === null && isError) {

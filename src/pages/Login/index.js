@@ -38,7 +38,7 @@ export default function Login() {
 		try {
 			const { data } = await api.signIn(formData);
 			persistLogged(data);
-			console.log(data);
+
 			setLoading(false);
 			navigate("/timeline");
 		} catch (error) {
@@ -49,7 +49,7 @@ export default function Login() {
 	}
 
 	useEffect(() => {
-		if (auth?.token) navigate("/timeline");
+		if (localStorage.getItem("auth")) navigate("/timeline");
 	}, [auth, navigate]);
 
 	return (

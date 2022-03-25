@@ -7,8 +7,8 @@ const TrendingStyle = styled.aside`
 
   background: #171717;
 
-  position: sticky;
-  top: 160px;
+	position: sticky;
+	top: 160px;
 
   @media (max-width: 1000px) {
     display: none;

@@ -11,7 +11,6 @@ function createConfig(token) {
 }
 
 async function getPosts() {
-	//const config = createConfig(token);
 	const resposta = axios.get(`${Base_URL}/posts`);
 
 	return resposta;
