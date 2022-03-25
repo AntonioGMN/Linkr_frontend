@@ -1,4 +1,4 @@
-import { PostsStyle, Snippet, ErroMensagem } from "../../components/posts";
+import { PostsStyle, ErroMensagem } from "../../components/posts";
 import { useEffect, useState } from "react";
 import { getPosts } from "../../Services/axiosServices";
 import Post from "./Post";
