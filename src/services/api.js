@@ -14,6 +14,9 @@ const signIn = async (userData) => instance.post("/sessions", userData);
 
 const logout = async (token) => instance.delete("/sessions", createAuth(token));
 
-const api = { signUp, signIn, logout };
+const publish = async (post, token) => instance.post("/posts", post, createAuth(token));
+
+const api = { signUp, signIn, publish, logout };
+
 
 export default api;
