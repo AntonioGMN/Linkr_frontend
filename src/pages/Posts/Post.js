@@ -2,6 +2,7 @@ import { PostStyle } from "../../components/posts";
 import Curtidas from "../../components/curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Snippet } from "../../components/posts";
+import { Link } from "react-router-dom";
 
 export default function Post({ list }) {
 	return list.map((p) => {
@@ -17,7 +18,7 @@ export default function Post({ list }) {
 					</Curtidas>
 				</section>
 				<div>
-					<p>{p.name}</p>
+					<Link to={`/users/${p.authorId}`}>{p.name}</Link>
 					<span>
 						{p.text}{" "}
 						{p.hashtags.map((h) => {

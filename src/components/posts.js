@@ -70,6 +70,15 @@ const PostStyle = styled.article`
 		color: #ffffff;
 	}
 
+	a {
+		font-family: Lato;
+		font-size: 19px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 23px;
+		color: #ffffff;
+	}
+
 	@media (max-width: 1000px) {
 		width: 100vw;
 		border-radius: 0px;
