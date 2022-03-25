@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [loading, setLoading] = useState(false);
   const { auth, persistLogged } = useAuth();
@@ -32,16 +32,16 @@ export default function Login() {
 
     if (!formData.email || !formData.password) {
       setLoading(false);
-      return alert('All fields must be filled');
+      return alert("All fields must be filled");
     }
 
-    try{
+    try {
       const { data } = await api.signIn(formData);
       persistLogged(data);
-      console.log(data)
+
       setLoading(false);
       navigate("/timeline");
-    } catch (error){
+    } catch (error) {
       setLoading(false);
       const errorMessage = error.response.data;
       alert(errorMessage);
@@ -49,7 +49,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (auth?.token) navigate("/timeline");
+    if (localStorage.getItem("auth")) navigate("/timeline");
   }, [auth, navigate]);
 
   return (
@@ -64,7 +64,7 @@ export default function Login() {
       </Aside>
       <FormContainer>
         <Form onSubmit={handleSubmit}>
-          <Input 
+          <Input
             placeholder="e-mail"
             type="email"
             name="email"

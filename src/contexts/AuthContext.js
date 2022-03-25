@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { createContext } from "react";
+import { useState, createContext } from "react";
 
 const AuthContext = createContext();
 
@@ -12,11 +11,15 @@ export function AuthProvider({ children }) {
     localStorage.setItem("auth", JSON.stringify(authData));
   }
 
+  function removeLogged() {
+    localStorage.removeItem("auth");
+  }
+
   return (
-    <AuthContext.Provider value={{ auth, persistLogged }}>
+    <AuthContext.Provider value={{ auth, persistLogged, removeLogged }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export default AuthContext;

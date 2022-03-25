@@ -10,10 +10,13 @@ function createAuth(token) {
 
 const signUp = async (newUser) => instance.post("/users", newUser);
 
-const publish = async (post, token) => instance.post("/posts", post, createAuth(token));
-
 const signIn = async (userData) => instance.post("/sessions", userData);
 
-const api = { signUp, signIn, publish };
+const logout = async (token) => instance.delete("/sessions", createAuth(token));
+
+const publish = async (post, token) => instance.post("/posts", post, createAuth(token));
+
+const api = { signUp, signIn, publish, logout };
+
 
 export default api;

@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-import Container from "../container";
-
-const authContainer = styled(Container)`
+const authContainer = styled.div`
   width: 100%;
+  min-height: 100vh;
 
+  display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 
   @media (max-width: 1000px) {
     flex-direction: column;
