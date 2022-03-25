@@ -4,6 +4,7 @@ import Title from "../Title";
 import Trending from "../trending";
 import Container from "../../components/container";
 import { Posts, Post } from "../../components/posts";
+import CreatePostCard from "./components/CreatePostCard";
 
 export default function Timeline() {
   return (
@@ -11,6 +12,7 @@ export default function Timeline() {
       <Title title="timeline"></Title>
       <MainDesktop>
         <Posts>
+          <CreatePostCard />
           <Post></Post>
           <Post></Post>
           <Post></Post>
