@@ -3,7 +3,6 @@ import MainDesktop from "../../components/mainDesktop";
 
 import Title from "../Title";
 import Trending from "../trending";
-
 import Posts from "../Posts";
 
 export default function Tineline() {

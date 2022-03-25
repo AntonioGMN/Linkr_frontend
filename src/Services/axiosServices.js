@@ -10,15 +10,20 @@ function createConfig(token) {
 	};
 }
 
-async function getPosts() {
+function getPosts() {
 	const resposta = axios.get(`${Base_URL}/posts`);
 
 	return resposta;
 }
 
-async function getPostsId(id) {
+function getPostsId(id) {
 	const promise = axios.get(`${Base_URL}/posts/${id}`);
 	return promise;
 }
 
-export { getPosts, getPostsId };
+function getUserByName(name) {
+	const promise = axios.get(`${Base_URL}/users/name`, name);
+	return promise;
+}
+
+export { getPosts, getPostsId, getUserByName };
