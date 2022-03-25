@@ -9,7 +9,7 @@ import Posts from "../Posts";
 export default function Tineline() {
 	return (
 		<Container>
-			<Title palavra="timeline"></Title>
+			<Title text="timeline" />
 			<MainDesktop>
 				<Posts />
 				<Trending />

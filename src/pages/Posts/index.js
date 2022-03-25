@@ -7,15 +7,30 @@ export default function Posts() {
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
 
-	useEffect(async () => {
+	useEffect(() => {
 		const promise = getPosts();
 		console.log(promise);
-		promise.then((response) => setPosts(response.data));
-		promise.catch(() => setIsError(true));
+		promise.then((response) => {
+			console.log(promise);
+			setPosts(response.data);
+		});
+		promise.catch(() => {
+			console.log(promise);
+			setIsError(true);
+		});
 	}, []);
+	console.log(isError);
 
 	console.log(posts);
-	if (posts === null) {
+	if (posts === null && isError) {
+		return (
+			<PostsStyle>
+				<ErroMensagem>
+					An error occured while trying to fetch the posts, please refresh the page
+				</ErroMensagem>
+			</PostsStyle>
+		);
+	} else if (posts === null) {
 		return (
 			<PostsStyle>
 				<ErroMensagem>Loading</ErroMensagem>
@@ -26,7 +41,7 @@ export default function Posts() {
 	if (posts !== null) {
 		console.log(isError);
 
-		if (posts.isAxisosError) {
+		if (isError) {
 			return (
 				<PostsStyle>
 					<ErroMensagem>

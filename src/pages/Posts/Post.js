@@ -24,7 +24,14 @@ export default function Post({ list }) {
 							return <strong>#{h} </strong>;
 						})}
 					</span>
-					<Snippet href={p.link} target="_blank"></Snippet>
+					<Snippet href={p.link} target="_blank">
+						<div>
+							<p>{p.linkTitle}</p>
+							<span>{p.linkDescription}</span>
+							<p>{p.link}</p>
+						</div>
+						<img src={p.linkImage} alt="erro"></img>
+					</Snippet>
 				</div>
 			</PostStyle>
 		);
