@@ -9,7 +9,7 @@ async function signUp(newUser) {
 }
 
 async function signIn(userData) {
-  return instance.post("/users/authentication", userData);
+  return instance.post("/sessions", userData);
 }
 
 const api = { signUp, signIn };
