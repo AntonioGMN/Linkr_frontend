@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import api from "../../services/api";
+import useAuth from "../../hooks/useAuth";
 import { StyledHeader, LogoutButton, LogoutContainer } from "./styles";
 import ShowDropMenu from "../../assets/showDropMenu.svg";
 import HideDropMenu from "../../assets/hideDropMenu.svg";
@@ -8,7 +10,19 @@ import HideDropMenu from "../../assets/hideDropMenu.svg";
 export default function Header() {
   const navigate = useNavigate();
 
+  const { auth, removeLogged } = useAuth();
+
   const [dropMenu, setDropMenu] = useState(false);
+
+  async function logout() {
+    try {
+      await api.logout(auth.token);
+      removeLogged();
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data);
+    }
+  }
 
   return (
     <StyledHeader>
@@ -30,7 +44,7 @@ export default function Header() {
           />
         )}
         <img
-          src="https://media.istockphoto.com/vectors/user-avatar-profile-icon-black-vector-illustration-vector-id1209654046"
+          src={auth.userPicture}
           alt="person"
           onClick={() => (dropMenu ? setDropMenu(false) : setDropMenu(true))}
         />
@@ -38,7 +52,7 @@ export default function Header() {
 
       {dropMenu && (
         <LogoutContainer onClick={() => setDropMenu(false)}>
-          <LogoutButton onClick={() => navigate("/")}>Logout</LogoutButton>
+          <LogoutButton onClick={logout}>Logout</LogoutButton>
         </LogoutContainer>
       )}
     </StyledHeader>
