@@ -39,18 +39,6 @@ export default function Posts() {
 	}
 
 	if (posts !== null) {
-		console.log(isError);
-
-		if (isError) {
-			return (
-				<PostsStyle>
-					<ErroMensagem>
-						An error occured while trying to fetch the posts, please refresh the page
-					</ErroMensagem>
-				</PostsStyle>
-			);
-		}
-
 		if (posts.length === 0) {
 			return (
 				<PostsStyle>
