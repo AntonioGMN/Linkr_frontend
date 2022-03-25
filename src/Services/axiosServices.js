@@ -17,4 +17,9 @@ async function getPosts() {
 	return resposta;
 }
 
-export { getPosts };
+async function getPostsId(id) {
+	const promise = axios.get(`${Base_URL}/posts/${id}`);
+	return promise;
+}
+
+export { getPosts, getPostsId };

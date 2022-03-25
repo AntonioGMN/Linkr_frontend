@@ -1,6 +1,6 @@
 import { PostsStyle, ErroMensagem } from "../../components/posts";
 import { useEffect, useState } from "react";
-import { getPosts } from "../../Services/axiosServices";
+import { getPostsId } from "../../Services/axiosServices";
 import Post from "../Posts/Post";
 import Container from "../../components/container";
 import MainDesktop from "../../components/mainDesktop";
@@ -8,13 +8,16 @@ import DivStyle from "../../components/divStyle";
 
 import Title from "../Title";
 import Trending from "../trending";
+import { useParams } from "react-router-dom";
 
 export default function UserPosts() {
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
+	const { id } = useParams();
+	console.log(id);
 
 	useEffect(() => {
-		const promise = getPosts();
+		const promise = getPostsId(id);
 		console.log(promise);
 		promise.then((response) => {
 			console.log(promise);
@@ -53,9 +56,8 @@ export default function UserPosts() {
 				<Container>
 					<DivStyle>
 						<img src={posts[0].pictureUrl}></img>
-						<Title text={`${posts[0].name} posts`} />
+						<Title text={`${posts[0].name}` + "`s posts"} />
 					</DivStyle>
-
 					<MainDesktop>
 						<PostsStyle>
 							<Post list={posts} />
