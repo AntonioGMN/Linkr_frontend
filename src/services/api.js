@@ -7,7 +7,7 @@ const instance = axios.create({
 const signUp = async (newUser) => instance.post("/users", newUser);
 
 async function signIn(userData) {
-  return instance.post("/users/authentication", userData);
+  return instance.post("/sessions", userData);
 }
 
 const api = { signUp, signIn };
