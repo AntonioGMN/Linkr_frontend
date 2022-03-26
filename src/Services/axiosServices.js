@@ -11,14 +11,14 @@ function createConfig(token) {
 	};
 }
 
-function getPosts() {
-	const resposta = axios.get(`${Base_URL}/posts`);
+function getPosts(token) {
+	const resposta = axios.get(`${Base_URL}/posts`, createConfig(token));
 
 	return resposta;
 }
 
-function getPostsId(id) {
-	const promise = axios.get(`${Base_URL}/posts/${id}`);
+function getPostsId(id, token) {
+	const promise = axios.get(`${Base_URL}/posts/${id}`, createConfig(token));
 	return promise;
 }
 
