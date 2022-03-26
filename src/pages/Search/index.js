@@ -1,43 +1,94 @@
 import { useEffect, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
-import SearchStyle from "./styles";
+import {
+	SearchStyleHeader,
+	ShowUsersStyle,
+	DebounceInputStyleHeader,
+	DebounceInputStyleTimeline,
+	SearchStyleTimeline,
+} from "./styles";
 import { getUserByName } from "../../Services/axiosServices";
+import { Link } from "react-router-dom";
 
-export default function Search() {
+export default function Search({ page }) {
 	const [name, setName] = useState("");
-	const [resoute, setResoute] = useState([]);
+	const [users, setUsers] = useState([]);
+	const [showUsers, setShowUsers] = useState(false);
 
-	useEffect(() => {
-		console.log("getUserByName(" + name + ")");
+	function getUsers() {
 		const promise = getUserByName(name);
 		promise.then((response) => {
 			console.log(response.data);
-			setResoute(response.data);
+			setUsers(response.data);
 		});
-	}, [name]);
-	console.log(resoute);
 
-	return (
-		<SearchStyle>
-			<DebounceInput
-				minLength={2}
-				debounceTimeout={300}
-				style={{
-					height: "45px",
-					width: "563px",
-					border: "none",
-					borderRadius: "8px",
-					color: "#C6C6C6",
-				}}
-				value={name}
-				onChange={(e) => {
-					setName(e.target.value);
-					//console.log(name);
-				}}
-			/>
-			{/* {resoute.map((r) => {
-				return <p>{r.name}</p>;
-			})} */}
-		</SearchStyle>
-	);
+		if (users.length === 0 || name.length === 0) setShowUsers(false);
+		else setShowUsers(true);
+	}
+
+	console.log("name: " + name);
+
+	if (page === "header") {
+		return (
+			<SearchStyleHeader visibiliti={showUsers}>
+				<DebounceInput
+					minLength={3}
+					debounceTimeout={300}
+					style={DebounceInputStyleHeader}
+					placeholder={"Search for people"}
+					value={name}
+					onChange={(e) => {
+						setName(e.target.value);
+						console.log(e);
+						console.log(e.target.value);
+						getUsers();
+					}}
+				/>
+				<ShowUsersStyle visibiliti={showUsers}>
+					{users.map((u) => {
+						return (
+							<Link to={`/users/${u.id}`}>
+								<button key={u.id}>
+									<img src={u.pictureUrl}></img>
+									<p>{u.name}</p>
+								</button>
+							</Link>
+						);
+					})}
+				</ShowUsersStyle>
+			</SearchStyleHeader>
+		);
+	}
+
+	if (page === "timeline") {
+		return (
+			<SearchStyleTimeline visibiliti={showUsers}>
+				<DebounceInput
+					minLength={3}
+					debounceTimeout={300}
+					style={DebounceInputStyleTimeline}
+					placeholder={"Search for people and friends"}
+					value={name}
+					onChange={(e) => {
+						setName(e.target.value);
+						console.log(e);
+						console.log(e.target.value);
+						getUsers();
+					}}
+				/>
+				<ShowUsersStyle visibiliti={showUsers}>
+					{users.map((u) => {
+						return (
+							<Link to={`/users/${u.id}`}>
+								<button key={u.id}>
+									<img src={u.pictureUrl}></img>
+									<p>{u.name}</p>
+								</button>
+							</Link>
+						);
+					})}
+				</ShowUsersStyle>
+			</SearchStyleTimeline>
+		);
+	}
 }

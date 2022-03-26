@@ -6,10 +6,12 @@ import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../Posts";
 import CreatePostCard from "./components/CreatePostCard";
+import Search from "../Search";
 
 export default function Timeline() {
 	return (
 		<Container>
+			<Search page="timeline"></Search>
 			<Header />
 			<Title text="timeline" />
 			<MainStyle>

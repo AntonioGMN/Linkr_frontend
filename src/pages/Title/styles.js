@@ -13,13 +13,9 @@ const TitleStyle = styled.h1`
 
 	margin: 53px 0 43px 0;
 
-	position: static;
-	top: 125px;
-	z-index: 2;
-
 	@media (max-width: 1000px) {
 		font-size: 33px;
-		margin-left: 17px;
+		margin: 19px 0 19px 17px;
 	}
 `;
 

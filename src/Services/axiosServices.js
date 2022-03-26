@@ -24,8 +24,7 @@ function getPostsId(id, token) {
 
 function getUserByName(name) {
 	const dates = { name: name };
-	console.log(dates);
-	const promise = axios.get(`${Base_URL}/users/name`, dates);
+	const promise = axios.post(`${Base_URL}/users/name`, dates);
 	return promise;
 }
 
