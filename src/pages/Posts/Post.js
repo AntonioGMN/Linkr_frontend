@@ -3,6 +3,7 @@ import Curtidas from "../../components/curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Snippet } from "../../components/posts";
 import { Link } from "react-router-dom";
+import HashtagsComponent from "./HashtagsComponent";
 
 export default function Post({ list }) {
 	console.log(list)
@@ -22,9 +23,9 @@ export default function Post({ list }) {
 					<Link to={`/users/${p.authorId}`}>{p.name}</Link>
 					<span>
 						{p.text}{" "}
-						{p.hashtags.map((h) => {
-							return <strong>#{h} </strong>;
-						})}
+						<HashtagsComponent>
+							{p.hashtags.map((h) => `#${h} `)}
+						</HashtagsComponent>
 					</span>
 					<Snippet href={p.link} target="_blank">
 						<div>
