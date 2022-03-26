@@ -13,7 +13,13 @@ function ComponentToTest({children}) {
   return (
     <span>
       <ReactHashtag 
-        renderHashtag={(hashtagValue) => <Hashtag>{hashtagValue}</Hashtag>}
+        renderHashtag={(hashtagValue) => (
+          <Hashtag
+            onClick={(e) => console.log(e.target.innerText)}
+          >
+            {hashtagValue}
+          </Hashtag>
+        )}
       >
         {children}
       </ReactHashtag>

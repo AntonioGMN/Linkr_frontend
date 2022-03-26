@@ -5,6 +5,7 @@ import { Snippet } from "../../components/posts";
 import { Link } from "react-router-dom";
 
 export default function Post({ list }) {
+	console.log(list)
 	return list.map((p) => {
 		return (
 			<PostStyle key={p.id}>
