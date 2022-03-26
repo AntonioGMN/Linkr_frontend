@@ -8,19 +8,31 @@ export default function Search() {
 	const [resoute, setResoute] = useState([]);
 
 	useEffect(() => {
+		console.log("getUserByName(" + name + ")");
 		const promise = getUserByName(name);
-		promise.then((response) => setResoute(response.data));
+		promise.then((response) => {
+			console.log(response.data);
+			setResoute(response.data);
+		});
 	}, [name]);
 	console.log(resoute);
 
 	return (
 		<SearchStyle>
 			<DebounceInput
-				Length={3}
+				minLength={2}
 				debounceTimeout={300}
+				style={{
+					height: "45px",
+					width: "563px",
+					border: "none",
+					borderRadius: "8px",
+					color: "#C6C6C6",
+				}}
+				value={name}
 				onChange={(e) => {
 					setName(e.target.value);
-					console.log(name);
+					//console.log(name);
 				}}
 			/>
 			{/* {resoute.map((r) => {

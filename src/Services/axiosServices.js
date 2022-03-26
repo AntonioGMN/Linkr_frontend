@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 const Base_URL = "http://localhost:4000";
 
@@ -22,7 +23,9 @@ function getPostsId(id) {
 }
 
 function getUserByName(name) {
-	const promise = axios.get(`${Base_URL}/users/name`, name);
+	const dates = { name: name };
+	console.log(dates);
+	const promise = axios.get(`${Base_URL}/users/name`, dates);
 	return promise;
 }
 
