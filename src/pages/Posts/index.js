@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import { PostsStyle, ErroMensagem } from "../../components/posts";
-import { getPosts } from "../../Services/axiosServices";
+import { getPosts } from "../../services/api";
 import Post from "./Post";
 
 export default function Posts() {
