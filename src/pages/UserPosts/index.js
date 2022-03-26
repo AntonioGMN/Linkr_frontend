@@ -1,5 +1,8 @@
-import { PostsStyle, ErroMensagem } from "../../components/posts";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import useAuth from "../../hooks/useAuth";
+import { PostsStyle, ErroMensagem } from "../../components/posts";
 import { getPostsId } from "../../Services/axiosServices";
 import Post from "../Posts/Post";
 import Container from "../../components/container";
@@ -8,16 +11,17 @@ import DivStyle from "../../components/divStyle";
 
 import Title from "../Title";
 import Trending from "../trending";
-import { useParams } from "react-router-dom";
 
 export default function UserPosts() {
+	const { auth } = useAuth();
+
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
 	const { id } = useParams();
 	console.log(id);
 
 	useEffect(() => {
-		const promise = getPostsId(id);
+		const promise = getPostsId(id, auth.token);
 		console.log(promise);
 		promise.then((response) => {
 			console.log(promise);

@@ -13,7 +13,7 @@ export default function Post({ list }) {
 					<Curtidas>
 						<span>
 							<CurtidaIcon size={30} />
-							Cutidas
+							Curtidas
 						</span>
 					</Curtidas>
 				</section>
