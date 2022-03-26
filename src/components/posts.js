@@ -6,9 +6,11 @@ const PostsStyle = styled.section`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	margin-top: 29px;
 
-	@media (max-width: 1000px) {
+	@media (max-width: 600px) {
 		width: 100vh;
+		margin: 0;
 	}
 `;
 
@@ -82,6 +84,7 @@ const PostStyle = styled.article`
 	@media (max-width: 1000px) {
 		width: 100vw;
 		border-radius: 0px;
+		margin: none;
 	}
 `;
 
