@@ -8,7 +8,7 @@ function createAuth(token) {
 	return { headers: { Authorization: `Bearer ${token}` } };
 }
 
-const signUp = async (newUser) => instance.post("/users", newUser);
+ const signUp = async (newUser) => instance.post("/users", newUser);
 
 const signIn = async (userData) => instance.post("/sessions", userData);
 

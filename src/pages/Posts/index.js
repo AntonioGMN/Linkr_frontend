@@ -17,7 +17,6 @@ export default function Posts() {
 		promise.catch(() => setIsError(true));
 	}, []);
 
-	console.log(posts);
 	if (posts === null && isError) {
 		return (
 			<PostsStyle>
