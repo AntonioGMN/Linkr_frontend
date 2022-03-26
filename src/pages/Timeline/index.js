@@ -1,28 +1,20 @@
+import Container from "../../components/container";
 import MainDesktop from "../../components/mainDesktop";
+import Header from "../../components/Header"
 
 import Title from "../Title";
 import Trending from "../trending";
-import Container from "../../components/container";
-import Header from "../../components/Header";
-import { Posts, Post } from "../../components/posts";
-import CreatePostCard from "./components/CreatePostCard";
+import Posts from "../Posts";
 
 export default function Timeline() {
-  return (
-    <Container>
-      <Header />
-      <Title title="timeline"></Title>
-      <MainDesktop>
-        <Posts>
-          <CreatePostCard />
-          <Post></Post>
-          <Post></Post>
-          <Post></Post>
-          <Post></Post>
-          <Post></Post>
-        </Posts>
-        <Trending />
-      </MainDesktop>
-    </Container>
-  );
+	return (
+		<Container>
+			<Header />
+			<Title text="timeline" />
+			<MainDesktop>
+				<Posts />
+				<Trending />
+			</MainDesktop>
+		</Container>
+	);
 }
