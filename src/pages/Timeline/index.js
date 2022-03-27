@@ -5,6 +5,7 @@ import Header from "../../components/Header"
 import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../Posts";
+import CreatePostCard from "./components/CreatePostCard";
 
 export default function Timeline() {
 	return (
@@ -12,7 +13,10 @@ export default function Timeline() {
 			<Header />
 			<Title text="timeline" />
 			<MainDesktop>
-				<Posts />
+				<div>
+					<CreatePostCard />
+					<Posts />
+				</div>
 				<Trending />
 			</MainDesktop>
 		</Container>

@@ -1,11 +1,18 @@
 import styled from "styled-components";
 
 const PostsStyle = styled.section`
+	position: relative;
 	width: 611px;
 
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+
+	.trash-icon {
+		position: absolute;
+		top: 23px;
+		right: 23px;
+	}
 
 	@media (max-width: 1000px) {
 		width: 100vh;

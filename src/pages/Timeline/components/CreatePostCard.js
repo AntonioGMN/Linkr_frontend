@@ -33,7 +33,7 @@ export default function CreatePostCard() {
         />
       </div>
       <Form onSubmit={handleSubmit}>
-        <span>What are you gonig to share today?</span>
+        <span>What are you going to share today?</span>
         <input
           type="url"
           placeholder="http://..."

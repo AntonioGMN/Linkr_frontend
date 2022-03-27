@@ -4,7 +4,7 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 11;
 
   display: flex;
   justify-content: space-between;
@@ -26,6 +26,7 @@ const StyledHeader = styled.header`
     width: 53px;
     height: 53px;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   .icon {
@@ -47,7 +48,7 @@ const LogoutButton = styled.button`
   position: fixed;
   top: 72px;
   right: 0;
-  z-index: 3;
+  z-index: 13;
 
   display: flex;
   justify-content: center;
@@ -69,7 +70,7 @@ const LogoutContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 12;
 
   width: 100%;
   height: 100%;
