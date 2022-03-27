@@ -17,7 +17,7 @@ export default function HashtagsComponent({children}) {
 )
 }
 
-const Hashtag = styled.span`
+const Hashtag = styled.strong`
   font-size: 19px;
   font-weight: 700;
   line-height: 23px;

@@ -60,14 +60,11 @@ const PostStyle = styled.article`
 	}
 
 	strong {
-		font-family: Lato;
-		font-size: 17px;
-		font-style: normal;
+		font-size: 19px;
 		font-weight: 700;
-		line-height: 20px;
-		letter-spacing: 0em;
-		text-align: left;
-		color: #ffffff;
+		line-height: 23px;
+		letter-spacing: 0.05em;
+		color: #FFFFFF;
 	}
 
 	a {

@@ -22,9 +22,8 @@ export default function Post({ list }) {
 				<div>
 					<Link to={`/users/${p.authorId}`}>{p.name}</Link>
 					<span>
-						{p.text}{" "}
 						<HashtagsComponent>
-							{p.hashtags.map((h) => `#${h} `)}
+							{p.text}
 						</HashtagsComponent>
 					</span>
 					<Snippet href={p.link} target="_blank">
