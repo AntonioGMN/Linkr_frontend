@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import { PostsStyle, ErroMensagem } from "../../components/posts";
-import { getPosts } from "../../Services/axiosServices";
+import { getPosts } from "../../services/api";
 import Post from "./Post";
 
 export default function Posts() {
@@ -17,7 +17,6 @@ export default function Posts() {
 		promise.catch(() => setIsError(true));
 	}, []);
 
-	console.log(posts);
 	if (posts === null && isError) {
 		return (
 			<PostsStyle>
