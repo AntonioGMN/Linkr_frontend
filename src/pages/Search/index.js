@@ -7,9 +7,10 @@ import {
 	DebounceInputStyleTimeline,
 	SearchStyleTimeline,
 } from "./styles";
-import { getUserByName } from "../../Services/axiosServices";
 import { Link } from "react-router-dom";
+import { getUserByName } from "../../services/api";
 import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
 
 export default function Search({ page }) {
 	const [name, setName] = useState("");
@@ -20,7 +21,6 @@ export default function Search({ page }) {
 	function getUsers() {
 		const promise = getUserByName(name, auth.token);
 		promise.then((response) => {
-			console.log(response.data);
 			setUsers(response.data);
 		});
 
@@ -30,8 +30,6 @@ export default function Search({ page }) {
 			setShowUsers(true);
 		}
 	}
-
-	console.log("name:" + name);
 
 	if (page === "header") {
 		return (
@@ -44,8 +42,6 @@ export default function Search({ page }) {
 					value={name}
 					onChange={(e) => {
 						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
 						getUsers();
 					}}
 				/>
@@ -76,8 +72,6 @@ export default function Search({ page }) {
 					value={name}
 					onChange={(e) => {
 						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
 						getUsers();
 					}}
 				/>

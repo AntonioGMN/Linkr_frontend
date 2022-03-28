@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import PostsStyle from "../../components/postsComponents/postsStyled";
 import ErroMensagem from "../../components/postsComponents/erroMensagem";
-import { getPostsId } from "../../services/api";
+import api from "../../services/api";
 import Post from "../Posts/Post";
 import Container from "../../components/container";
 import { MainStyle } from "../../components/mainStyle";
@@ -22,7 +22,7 @@ export default function UserPosts() {
 	console.log(id);
 
 	useEffect(() => {
-		const promise = getPostsId(id, auth.token);
+		const promise = api.getPostsId(id, auth.token);
 		console.log(promise);
 		promise.then((response) => {
 			console.log(promise);
