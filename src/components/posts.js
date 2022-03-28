@@ -59,7 +59,6 @@ const PostStyle = styled.article`
 		color: #b7b7b7;
 	}
 
-
 	a {
 		font-family: Lato;
 		font-size: 19px;

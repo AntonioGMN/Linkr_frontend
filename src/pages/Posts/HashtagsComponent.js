@@ -1,12 +1,20 @@
 import ReactHashtag from "@mdnm/react-hashtag";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function HashtagsComponent({children}) {
+  const navigate = useNavigate();
+
+  function navigateToHashtagPage(e) {
+    const hashtagName = e.target.innerText.split("#")[1];
+    navigate(`/hashtags/${hashtagName}`)
+  }
+
   return (
     <ReactHashtag 
       renderHashtag={(hashtagValue) => (
         <Hashtag
-          onClick={(e) => console.log(e.target.innerText)}
+          onClick={navigateToHashtagPage}
         >
           {hashtagValue}
         </Hashtag>
