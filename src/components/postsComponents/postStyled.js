@@ -71,13 +71,13 @@ const PostStyle = styled.article`
 		color: #ffffff;
 	}
 
-	.edit-icon {
-		position: absolute;
-		top: 23px;
-		right: 35px;
-	}
-	
-	.trash-icon {
+	.icons {
+		width: 57px;
+		height: 20px;
+
+		flex-direction: row;
+		justify-content: space-between;
+
 		position: absolute;
 		top: 23px;
 		right: 23px;

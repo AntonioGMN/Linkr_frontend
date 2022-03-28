@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
@@ -61,16 +61,29 @@ export default function Post({ list }) {
 		return (
 			<PostStyle key={p.id}>
 				{ // A user can only delete your own posts
-				p.name === auth.userName && 
-				(<FaTrash
-					className="trash-icon"
-					size={20}
-					style={{fill: 'white'}}
-					onClick={() => {
-						setPostToBeDeletedId(p.id);
-						setDeletionModalIsOpen(true);
-					}}
-				/>)}
+					p.name === auth.userName && (
+					<div className="icons">
+						<FaPencilAlt
+							className="edit-icon"
+							size={20}
+							style={{fill: 'white'}}
+							onClick={() => {
+								setPostToBeDeletedId(p.id);
+								setDeletionModalIsOpen(true);
+							}}
+						/>
+						<FaTrash
+							className="trash-icon"
+							size={20}
+							style={{fill: 'white'}}
+							onClick={() => {
+								setPostToBeDeletedId(p.id);
+								setDeletionModalIsOpen(true);
+							}}
+						/>
+					</div>
+					)
+				}
 				
 				<Modal isOpen={deletionModalIsOpen} style={customStyles}>
 					{deletingPost ? <ModalText>Deleting post...</ModalText> :
