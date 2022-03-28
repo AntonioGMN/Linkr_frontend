@@ -17,6 +17,9 @@ export const logout = async (token) => instance.delete("/sessions", createAuth(t
 export const publish = async (post, token) =>
   instance.post("/posts", post, createAuth(token));
 
+export const deletePost = async (id, token) =>
+	instance.delete(`/posts/${id}`, createAuth(token));
+
 export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
 
 export const getPostsId = async (id, token) =>
@@ -32,6 +35,7 @@ const api = {
   signIn,
   publish,
   logout,
+  deletePost,
   getPosts,
   getPostsId,
   getUserByName,
