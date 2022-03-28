@@ -4,6 +4,7 @@ import Curtidas from "../../components/curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 export default function Post({ list }) {
 	return list.map((p) => {

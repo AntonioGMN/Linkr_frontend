@@ -27,6 +27,9 @@ export const getPostsId = async (id, token) =>
 export const getUserByName = async (name, token) =>
 	instance.post(`/users/name`, { name }, createAuth(token));
 
+export const getUserById = async (id, token) =>
+	instance.get(`/users/${id}`, createAuth(token));
+
 export const getTrending = async (token) =>
 	instance.get("/hashtags/trending", createAuth(token));
 
@@ -39,6 +42,7 @@ const api = {
 	getPostsId,
 	getUserByName,
 	getTrending,
+	getUserById,
 };
 
 export default api;

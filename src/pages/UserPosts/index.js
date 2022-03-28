@@ -13,27 +13,27 @@ import DivStyle from "../../components/divStyle";
 import Title from "../Title";
 import Trending from "../trending";
 
+import Header from "../../components/Header";
+import Search from "../Search";
+
 export default function UserPosts() {
 	const { auth } = useAuth();
 
 	const [posts, setPosts] = useState(null);
-	const [isError, setIsError] = useState(false);
+	const [user, setUser] = useState(null);
 	const { id } = useParams();
-	console.log(id);
 
 	useEffect(() => {
-		const promise = api.getPostsId(id, auth.token);
-		console.log(promise);
-		promise.then((response) => {
-			console.log(promise);
-			setPosts(response.data);
-		});
-		promise.catch(() => {
-			console.log(promise);
-			setIsError(true);
-		});
-	}, []);
-	console.log(isError);
+		const promisePosts = api.getPostsId(id, auth.token);
+		promisePosts.then((response) => setPosts(response.data));
+		promisePosts.catch(() => console.log(promisePosts));
+	}, [id]);
+
+	useEffect(() => {
+		const promiseUser = api.getUserById(id, auth.token);
+		promiseUser.then((response) => setUser(response.data));
+		promiseUser.catch((err) => console.log(err));
+	}, [id]);
 
 	if (posts === null) {
 		return (
@@ -45,20 +45,40 @@ export default function UserPosts() {
 
 	if (posts !== null) {
 		if (posts.length === 0) {
+			if (user !== null) {
+				return (
+					<Container>
+						<DivStyle>
+							<img src={user[0].pictureUrl}></img>
+							<Title text={user[0].name} />
+						</DivStyle>
+						<MainStyle>
+							<PostsStyle>
+								<ErroMensagem>There are no posts yet</ErroMensagem>
+							</PostsStyle>
+							<Trending />
+						</MainStyle>
+					</Container>
+				);
+			} else {
+				return (
+					<Container>
+						<Title text="toto" />
+						<MainStyle>
+							<PostsStyle>
+								<ErroMensagem>There are no posts yet</ErroMensagem>
+							</PostsStyle>
+							<Trending />
+						</MainStyle>
+					</Container>
+				);
+			}
+		}
+		{
 			return (
 				<Container>
-					<Title text="timeline" />
-					<MainStyle>
-						<PostsStyle>
-							<ErroMensagem>There are no posts yet</ErroMensagem>
-						</PostsStyle>
-						<Trending />
-					</MainStyle>
-				</Container>
-			);
-		} else {
-			return (
-				<Container>
+					<Header />
+					<Search page="timeline"></Search>
 					<DivStyle>
 						<img src={posts[0].pictureUrl}></img>
 						<Title text={`${posts[0].name}` + "`s posts"} />
