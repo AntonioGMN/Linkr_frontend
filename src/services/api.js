@@ -33,7 +33,7 @@ const getPostsByHashtag = async ({ hashtag, token }) =>
 const getPostsId = async (id, token) =>
   instance.get(`/posts/${id}`, createAuth(token));
 
-const getUserByName = async (name) => instance.get(`/users/name`, name);
+const getUserByName = async (name) => instance.get(`/users?name=${name}`);
 
 const getTrending = async (token) =>
   instance.get("/hashtags/trending", createAuth(token));
