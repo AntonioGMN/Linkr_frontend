@@ -25,32 +25,31 @@ export default function Header() {
 		}
 	}
 
-	return (
-		<StyledHeader>
-			<h1>linkr</h1>
-			<Search page="header" />
-			<div>
-				{dropMenu ? (
-					<img
-						className="icon"
-						src={HideDropMenu}
-						alt="Hide drop menu"
-						onClick={() => setDropMenu(false)}
-					/>
-				) : (
-					<img
-						className="icon"
-						src={ShowDropMenu}
-						alt="Hide drop menu"
-						onClick={() => setDropMenu(true)}
-					/>
-				)}
-				<img
-					src={auth.userPicture}
-					alt="person"
-					onClick={() => (dropMenu ? setDropMenu(false) : setDropMenu(true))}
-				/>
-			</div>
+  return (
+    <StyledHeader>
+      <h1 onClick={() => navigate("/timeline")}>linkr</h1>
+      <div>
+        {dropMenu ? (
+          <img
+            className="icon"
+            src={HideDropMenu}
+            alt="Hide drop menu"
+            onClick={() => setDropMenu(false)}
+          />
+        ) : (
+          <img
+            className="icon"
+            src={ShowDropMenu}
+            alt="Hide drop menu"
+            onClick={() => setDropMenu(true)}
+          />
+        )}
+        <img
+          src={auth.userPicture}
+          alt="person"
+          onClick={() => (dropMenu ? setDropMenu(false) : setDropMenu(true))}
+        />
+      </div>
 
 			{dropMenu && (
 				<LogoutContainer onClick={() => setDropMenu(false)}>
