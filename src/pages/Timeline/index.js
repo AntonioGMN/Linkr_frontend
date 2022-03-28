@@ -11,8 +11,8 @@ import Search from "../Search";
 export default function Timeline() {
 	return (
 		<Container>
-			<Search page="timeline"></Search>
 			<Header />
+			<Search page="timeline"></Search>
 			<Title text="timeline" />
 			<MainStyle>
 				<Column>

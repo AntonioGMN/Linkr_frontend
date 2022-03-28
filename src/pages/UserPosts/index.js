@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
-import { PostsStyle, ErroMensagem } from "../../components/posts";
+import PostsStyle from "../../components/postsComponents/postsStyled";
+import ErroMensagem from "../../components/postsComponents/erroMensagem";
 import { getPostsId } from "../../services/api";
 import Post from "../Posts/Post";
 import Container from "../../components/container";

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-
 import useAuth from "../../hooks/useAuth";
-import { PostsStyle, ErroMensagem } from "../../components/posts";
 import { getPosts } from "../../services/api";
+
+import PostsStyle from "../../components/postsComponents/postsStyled";
+import ErroMensagem from "../../components/postsComponents/erroMensagem";
+
+import { useEffect, useState } from "react";
 import Post from "./Post";
 
 export default function Posts() {
@@ -43,7 +45,7 @@ export default function Posts() {
 		} else {
 			return (
 				<PostsStyle>
-					<Post list={posts} />
+					<Post list={posts} />{" "}
 				</PostsStyle>
 			);
 		}

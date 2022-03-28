@@ -16,7 +16,7 @@ const Container = styled.div`
 		border-radius: 50px;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 800px) {
 		width: 100%;
 	}
 `;
