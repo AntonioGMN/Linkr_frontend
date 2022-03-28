@@ -51,17 +51,6 @@ const PostStyle = styled.article`
 		color: #b7b7b7;
 	}
 
-	strong {
-		font-family: Lato;
-		font-size: 17px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: 20px;
-		letter-spacing: 0em;
-		text-align: left;
-		color: #ffffff;
-	}
-
 	a {
 		font-family: Lato;
 		font-size: 19px;
