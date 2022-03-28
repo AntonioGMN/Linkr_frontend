@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const baseURL =
+  process.env.REACT_APP_API_URL === "dev"
+    ? "http://localhost:4000"
+    : "https://linkr390.herokuapp.com";
+
 const instance = axios.create({
-  baseURL: "http://localhost:4000",
+	baseURL,
 });
 
 function createAuth(token) {
@@ -17,7 +22,10 @@ const logout = async (token) => instance.delete("/sessions", createAuth(token));
 const publish = async (post, token) =>
   instance.post("/posts", post, createAuth(token));
 
-const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
+export const deletePost = async (id, token) =>
+	instance.delete(`/posts/${id}`, createAuth(token));
+
+export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
 
 const getPostsByHashtag = async ({ hashtag, token }) =>
   instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
@@ -35,6 +43,7 @@ const api = {
   signIn,
   publish,
   logout,
+  deletePost,
   getPosts,
   getPostsId,
   getUserByName,
