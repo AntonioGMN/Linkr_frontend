@@ -69,7 +69,7 @@ export default function Search({ page }) {
 		return (
 			<SearchStyleTimeline visibiliti={showUsers}>
 				<DebounceInput
-					minLength={3}
+					minLength={2}
 					debounceTimeout={300}
 					style={DebounceInputStyleTimeline}
 					placeholder={"Search for people and friends"}
