@@ -27,10 +27,7 @@ export default function CreatePostCard() {
   return (
     <Container>
       <div>
-        <Avatar
-          src={auth.userPicture}
-          alt="avatar"
-        />
+        <Avatar src={auth.userPicture} alt="avatar" />
       </div>
       <Form onSubmit={handleSubmit}>
         <span>What are you going to share today?</span>
@@ -70,7 +67,7 @@ const Container = styled.div`
   padding: 16px;
   display: flex;
   gap: 16px;
-
+  margin-bottom: 16px;
   @media (max-width: 600px) {
     width: 100%;
     height: 200px;

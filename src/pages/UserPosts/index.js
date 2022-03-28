@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 import { PostsStyle, ErroMensagem } from "../../components/posts";
-import { getPostsId } from "../../Services/axiosServices";
+import { getPostsId } from "../../services/api";
 import Post from "../Posts/Post";
 import Container from "../../components/container";
 import MainDesktop from "../../components/mainDesktop";
