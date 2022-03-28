@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import { getUserByName } from "../../services/api";
 import useAuth from "../../hooks/useAuth";
-import api from "../../services/api";
 
 export default function Search({ page }) {
 	const [name, setName] = useState("");
@@ -23,19 +22,18 @@ export default function Search({ page }) {
 		promise.then((response) => {
 			setUsers(response.data);
 		});
-
-		if (users.length === 0 || name.length === 0) setShowUsers(false);
-		else {
-			setUsers([]);
-			setShowUsers(true);
-		}
+		setShowUsers(true);
 	}
+
+	useEffect(() => {
+		if (name.length === 0) setShowUsers(false);
+	});
 
 	if (page === "header") {
 		return (
 			<SearchStyleHeader visibiliti={showUsers}>
 				<DebounceInput
-					minLength={3}
+					minLength={2}
 					debounceTimeout={300}
 					style={DebounceInputStyleHeader}
 					placeholder={"Search for people"}
@@ -48,9 +46,9 @@ export default function Search({ page }) {
 				<ShowUsersStyle visibiliti={showUsers}>
 					{users.map((u) => {
 						return (
-							<Link to={`/users/${u.id}`}>
-								<button key={u.id}>
-									<img src={u.pictureUrl}></img>
+							<Link to={`/users/${u.id}`} key={u.id}>
+								<button>
+									<img src={u.pictureUrl} alt="erro"></img>
 									<p>{u.name}</p>
 								</button>
 							</Link>
@@ -65,7 +63,7 @@ export default function Search({ page }) {
 		return (
 			<SearchStyleTimeline visibiliti={showUsers}>
 				<DebounceInput
-					minLength={3}
+					minLength={2}
 					debounceTimeout={300}
 					style={DebounceInputStyleTimeline}
 					placeholder={"Search for people and friends"}
@@ -73,14 +71,15 @@ export default function Search({ page }) {
 					onChange={(e) => {
 						setName(e.target.value);
 						getUsers();
+						if (name.length === 0) setShowUsers(false);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
 					{users.map((u) => {
 						return (
-							<Link to={`/users/${u.id}`}>
-								<button key={u.id}>
-									<img src={u.pictureUrl}></img>
+							<Link to={`/users/${u.id}`} key={u.id}>
+								<button>
+									<img src={u.pictureUrl} alt="erro"></img>
 									<p>{u.name}</p>
 								</button>
 							</Link>
