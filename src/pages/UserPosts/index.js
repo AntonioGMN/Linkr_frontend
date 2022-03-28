@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
-import { PostsStyle, ErroMensagem } from "../../components/posts";
+import PostsStyle from "../../components/postsComponents/postsStyled";
+import ErroMensagem from "../../components/postsComponents/erroMensagem";
 import { getPostsId } from "../../services/api";
 import Post from "../Posts/Post";
 import Container from "../../components/container";
-import MainDesktop from "../../components/mainDesktop";
+import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
 
 import Title from "../Title";
@@ -47,12 +48,12 @@ export default function UserPosts() {
 			return (
 				<Container>
 					<Title text="timeline" />
-					<MainDesktop>
+					<MainStyle>
 						<PostsStyle>
 							<ErroMensagem>There are no posts yet</ErroMensagem>
 						</PostsStyle>
 						<Trending />
-					</MainDesktop>
+					</MainStyle>
 				</Container>
 			);
 		} else {
@@ -62,12 +63,12 @@ export default function UserPosts() {
 						<img src={posts[0].pictureUrl}></img>
 						<Title text={`${posts[0].name}` + "`s posts"} />
 					</DivStyle>
-					<MainDesktop>
+					<MainStyle>
 						<PostsStyle>
 							<Post list={posts} />
 						</PostsStyle>
 						<Trending />
-					</MainDesktop>
+					</MainStyle>
 				</Container>
 			);
 		}
