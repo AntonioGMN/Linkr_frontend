@@ -3,7 +3,8 @@ import { FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
-import { PostStyle, ModalText, ModalButtonsDiv, ModalButton, Snippet } from "../../components/posts";
+import PostStyle, { ModalText, ModalButtonsDiv, ModalButton } from "../../components/postsComponents/postStyled";
+import Snippet from "../../components/postsComponents/snippet";
 import Curtidas from "../../components/curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -44,6 +45,7 @@ export default function Post({ list }) {
 
 		try {
 			await api.deletePost(id, auth.token);
+			setDeletionModalIsOpen(false);
 			window.location.reload();
 			setDeletingPost(false);
 		} catch (error) {

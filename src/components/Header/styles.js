@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   align-items: center;
 
   padding: 0 22px;
-  width: 100%;
+  width: 100vw;
   height: 72px;
   background-color: #151515;
 
@@ -47,10 +47,10 @@ const LogoutButton = styled.button`
 	all: unset;
 	box-sizing: border-box;
 
-  position: fixed;
-  top: 72px;
-  right: 0;
-  z-index: 13;
+	position: fixed;
+	top: 72px;
+	right: 0;
+	z-index: 3;
 
 	display: flex;
 	justify-content: center;
@@ -69,10 +69,10 @@ const LogoutButton = styled.button`
 `;
 
 const LogoutContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 12;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
 
 	width: 100%;
 	height: 100%;

@@ -28,6 +28,7 @@ export default function Header() {
   return (
     <StyledHeader>
       <h1 onClick={() => navigate("/timeline")}>linkr</h1>
+			<Search page="header" />
       <div>
         {dropMenu ? (
           <img
