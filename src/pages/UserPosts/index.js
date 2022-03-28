@@ -19,7 +19,6 @@ export default function UserPosts() {
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
 	const { id } = useParams();
-	console.log(id);
 
 	useEffect(() => {
 		const promise = getPostsId(id, auth.token);
@@ -29,11 +28,9 @@ export default function UserPosts() {
 			setPosts(response.data);
 		});
 		promise.catch(() => {
-			console.log(promise);
 			setIsError(true);
 		});
 	}, []);
-	console.log(isError);
 
 	if (posts === null) {
 		return (

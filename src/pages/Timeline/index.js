@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../Posts";
-import CreatePostCard from "./components/CreatePostCard";
+import CreatePostCard from "../../components/CreatePostCard";
 import Search from "../Search";
 
 export default function Timeline() {
