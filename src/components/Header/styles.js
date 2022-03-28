@@ -47,17 +47,10 @@ const LogoutButton = styled.button`
 	all: unset;
 	box-sizing: border-box;
 
-<<<<<<< HEAD
   position: fixed;
   top: 72px;
   right: 0;
   z-index: 13;
-=======
-	position: fixed;
-	top: 72px;
-	right: 0;
-	z-index: 3;
->>>>>>> 5684f1ce33a8ddceca46daad61a013a46bec629a
 
 	display: flex;
 	justify-content: center;
@@ -76,17 +69,10 @@ const LogoutButton = styled.button`
 `;
 
 const LogoutContainer = styled.div`
-<<<<<<< HEAD
   position: fixed;
   top: 0;
   left: 0;
   z-index: 12;
-=======
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 2;
->>>>>>> 5684f1ce33a8ddceca46daad61a013a46bec629a
 
 	width: 100%;
 	height: 100%;
