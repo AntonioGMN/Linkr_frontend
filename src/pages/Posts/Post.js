@@ -50,12 +50,14 @@ export default function Post({ list }) {
 	return list.map((p) => {
 		return (
 			<PostStyle key={p.id}>
-				<FaTrash
+				{ // A user can only delete your own posts
+				p.name === auth.userName && 
+				(<FaTrash
 					className="trash-icon"
 					size={20}
 					style={{fill: 'white'}}
 					onClick={() => setDeletionModalIsOpen(true)}
-				/>
+				/>)}
 				
 				<Modal isOpen={deletionModalIsOpen} style={customStyles}>
 					<p>
