@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import useAuth from "../../../hooks/useAuth";
-import api from "../../../services/api";
+import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
 
 export default function CreatePostCard() {
 	const [text, setText] = useState("");
