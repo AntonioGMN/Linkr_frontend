@@ -14,6 +14,10 @@ const DivStyle = styled.div`
 	h1 {
 		margin: 0 0 0 20px;
 	}
+
+	img {
+		object-fit: cover;
+	}
 `;
 
 export default DivStyle;

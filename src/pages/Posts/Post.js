@@ -3,9 +3,8 @@ import { FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
-import { PostStyle } from "../../components/posts";
+import { PostStyle, ModalText, ModalButtonsDiv, ModalButton } from "../../components/posts";
 import Curtidas from "../../components/curtidas";
-import Button from "../../components/button";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Snippet } from "../../components/posts";
 import { Link } from "react-router-dom";
@@ -29,6 +28,7 @@ const customStyles = {
 		fontWeight: 700,
 		fontSize: '34px',
 		color: '#ffffff',
+		textAlign: "center",
   },
 };
 
@@ -36,16 +36,24 @@ export default function Post({ list }) {
 	const { auth } = useAuth();
 
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
+	const [deletingPost, setDeletingPost] = useState(false);
+	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
 
 	async function deletePost(id) {
+		setDeletingPost(true);
+
 		try {
 			await api.deletePost(id, auth.token);
 			window.location.reload();
+			setDeletingPost(false);
 		} catch (error) {
-				alert(error.response.data);
-				setDeletionModalIsOpen(false);
+			alert(error.response.data);
+			setDeletionModalIsOpen(false);
+			setDeletingPost(false);
 		}
 	}
+
+	Modal.setAppElement(".root");
 
 	return list.map((p) => {
 		return (
@@ -56,20 +64,26 @@ export default function Post({ list }) {
 					className="trash-icon"
 					size={20}
 					style={{fill: 'white'}}
-					onClick={() => setDeletionModalIsOpen(true)}
+					onClick={() => {
+						setPostToBeDeletedId(p.id);
+						setDeletionModalIsOpen(true);
+					}}
 				/>)}
 				
 				<Modal isOpen={deletionModalIsOpen} style={customStyles}>
-					<p>
-						Are you sure you want
-						<br /> to delete this post?
-					</p>
-					<div>
-						<Button onClick={() => setDeletionModalIsOpen(false)}>
-							No, go back
-						</Button>
-						<Button onClick={() => deletePost(p.id)}>Yes, delete it</Button>
-					</div>
+					{deletingPost ? <ModalText>Deleting post...</ModalText> :
+					(<>
+						<ModalText>
+							Are you sure you want
+							<br /> to delete this post?
+						</ModalText>
+						<ModalButtonsDiv>
+							<ModalButton cancel onClick={() => setDeletionModalIsOpen(false)}>
+								No, go back
+							</ModalButton>
+							<ModalButton onClick={() => deletePost(postToBeDeletedId)}>Yes, delete it</ModalButton>
+						</ModalButtonsDiv>
+					</>)}
 				</Modal>
 
 				<section>

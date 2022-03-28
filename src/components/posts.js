@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import Button from "./button";
+
 const PostsStyle = styled.section`
 	width: 611px;
 
@@ -28,6 +30,7 @@ const PostStyle = styled.article`
 		height: 50px;
 		border-radius: 50px;
 		margin-bottom: 15px;
+		object-fit: cover;
 	}
 
 	div {
@@ -159,4 +162,27 @@ const ErroMensagem = styled.div`
 	color: #b7b7b7;
 `;
 
-export { PostsStyle, PostStyle, Snippet, ErroMensagem };
+const ModalText = styled.p`
+	font-weight: 700;
+	font-size: 34px;
+	color: #ffffff;
+	text-align: center;
+`;
+
+const ModalButtonsDiv = styled.div`
+	display: flex;
+	gap: 27px;
+
+	margin-top: 39px;
+`;
+
+const ModalButton = styled(Button)`
+	width: 134px;
+	height: 37px;
+	background-color: ${({ cancel }) => cancel ? 'white' : '#1877f2'};
+
+	font-size: 18px;
+	color: ${({ cancel }) => cancel ? '#1877f2' : 'white'};
+`;
+
+export { PostsStyle, PostStyle, Snippet, ErroMensagem, ModalText, ModalButtonsDiv, ModalButton };
