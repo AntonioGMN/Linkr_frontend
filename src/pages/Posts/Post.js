@@ -3,11 +3,12 @@ import { FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
-import { PostStyle, ModalText, ModalButtonsDiv, ModalButton } from "../../components/posts";
+import PostStyle, { ModalText, ModalButtonsDiv, ModalButton } from "../../components/postsComponents/postStyled";
+import Snippet from "../../components/postsComponents/snippet";
 import Curtidas from "../../components/curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
-import { Snippet } from "../../components/posts";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const customStyles = {
 	content: {
@@ -44,6 +45,7 @@ export default function Post({ list }) {
 
 		try {
 			await api.deletePost(id, auth.token);
+			setDeletionModalIsOpen(false);
 			window.location.reload();
 			setDeletingPost(false);
 		} catch (error) {
@@ -100,7 +102,7 @@ export default function Post({ list }) {
 					<span>
 						{p.text}{" "}
 						{p.hashtags.map((h) => {
-							return <strong>#{h} </strong>;
+							return <strong key={uuidv4()}>#{h} </strong>;
 						})}
 					</span>
 					<Snippet href={p.link} target="_blank">

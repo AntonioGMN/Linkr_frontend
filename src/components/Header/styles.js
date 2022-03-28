@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   align-items: center;
 
   padding: 0 22px;
-  width: 100%;
+  width: 100vw;
   height: 72px;
   background-color: #151515;
 
@@ -44,38 +44,52 @@ const StyledHeader = styled.header`
 `;
 
 const LogoutButton = styled.button`
-  all: unset;
-  box-sizing: border-box;
+	all: unset;
+	box-sizing: border-box;
 
+<<<<<<< HEAD
   position: fixed;
   top: 72px;
   right: 0;
   z-index: 13;
+=======
+	position: fixed;
+	top: 72px;
+	right: 0;
+	z-index: 3;
+>>>>>>> 5684f1ce33a8ddceca46daad61a013a46bec629a
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  width: 135px;
-  height: 47px;
-  border-radius: 0 0 0 20px;
-  background-color: #171717;
+	width: 135px;
+	height: 47px;
+	border-radius: 0 0 0 20px;
+	background-color: #171717;
 
-  font-weight: bold;
-  font-size: 17px;
-  color: white;
+	font-weight: bold;
+	font-size: 17px;
+	color: white;
 
-  cursor: pointer;
+	cursor: pointer;
 `;
 
 const LogoutContainer = styled.div`
+<<<<<<< HEAD
   position: fixed;
   top: 0;
   left: 0;
   z-index: 12;
+=======
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+>>>>>>> 5684f1ce33a8ddceca46daad61a013a46bec629a
 
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 `;
 
 export { StyledHeader, LogoutButton, LogoutContainer };

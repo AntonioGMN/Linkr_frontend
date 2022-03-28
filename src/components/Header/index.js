@@ -6,27 +6,29 @@ import useAuth from "../../hooks/useAuth";
 import { StyledHeader, LogoutButton, LogoutContainer } from "./styles";
 import ShowDropMenu from "../../assets/showDropMenu.svg";
 import HideDropMenu from "../../assets/hideDropMenu.svg";
+import Search from "../../pages/Search";
 
 export default function Header() {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const { auth, removeLogged } = useAuth();
+	const { auth, removeLogged } = useAuth();
 
-  const [dropMenu, setDropMenu] = useState(false);
+	const [dropMenu, setDropMenu] = useState(false);
 
-  async function logout() {
-    try {
-      await api.logout(auth.token);
-      removeLogged();
-      navigate("/");
-    } catch (error) {
-      alert(error.response.data);
-    }
-  }
+	async function logout() {
+		try {
+			await api.logout(auth.token);
+			removeLogged();
+			navigate("/");
+		} catch (error) {
+			alert(error.response.data);
+		}
+	}
 
   return (
     <StyledHeader>
       <h1 onClick={() => navigate("/timeline")}>linkr</h1>
+			<Search page="header" />
       <div>
         {dropMenu ? (
           <img
@@ -50,11 +52,11 @@ export default function Header() {
         />
       </div>
 
-      {dropMenu && (
-        <LogoutContainer onClick={() => setDropMenu(false)}>
-          <LogoutButton onClick={logout}>Logout</LogoutButton>
-        </LogoutContainer>
-      )}
-    </StyledHeader>
-  );
+			{dropMenu && (
+				<LogoutContainer onClick={() => setDropMenu(false)}>
+					<LogoutButton onClick={logout}>Logout</LogoutButton>
+				</LogoutContainer>
+			)}
+		</StyledHeader>
+	);
 }
