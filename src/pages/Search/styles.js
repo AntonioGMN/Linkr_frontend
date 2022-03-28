@@ -7,10 +7,10 @@ export const DebounceInputStyleHeader = {
 	borderRadius: "8px",
 	color: "#C6C6C6",
 
-	"font-family": "Lato",
-	"font-size": "17px",
-	"font-weight": "400",
-	"line-height": "20px",
+	fontfamily: "Lato",
+	fontsize: "17px",
+	fontweight: "400",
+	lineheight: "20px",
 	padding: "16px",
 };
 
@@ -33,10 +33,10 @@ export const DebounceInputStyleTimeline = {
 	borderRadius: "8px",
 	color: "#C6C6C6",
 
-	"font-family": "Lato",
-	"font-size": "17px",
-	"font-weight": "400",
-	"line-height": "20px",
+	fontfamily: "Lato",
+	fontsize: "17px",
+	fontweight: "400",
+	lineheight: "20px",
 	padding: "16px",
 };
 

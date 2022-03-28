@@ -9,24 +9,29 @@ import {
 } from "./styles";
 import { getUserByName } from "../../Services/axiosServices";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function Search({ page }) {
 	const [name, setName] = useState("");
 	const [users, setUsers] = useState([]);
 	const [showUsers, setShowUsers] = useState(false);
+	const { auth } = useAuth();
 
 	function getUsers() {
-		const promise = getUserByName(name);
+		const promise = getUserByName(name, auth.token);
 		promise.then((response) => {
 			console.log(response.data);
 			setUsers(response.data);
 		});
 
 		if (users.length === 0 || name.length === 0) setShowUsers(false);
-		else setShowUsers(true);
+		else {
+			setUsers([]);
+			setShowUsers(true);
+		}
 	}
 
-	console.log("name: " + name);
+	console.log("name:" + name);
 
 	if (page === "header") {
 		return (
