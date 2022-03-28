@@ -8,20 +8,34 @@ function createAuth(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
 }
 
-const signUp = async (newUser) => instance.post("/users", newUser);
+export const signUp = async (newUser) => instance.post("/users", newUser);
 
-const signIn = async (userData) => instance.post("/sessions", userData);
+export const signIn = async (userData) => instance.post("/sessions", userData);
 
-const logout = async (token) => instance.delete("/sessions", createAuth(token));
+export const logout = async (token) => instance.delete("/sessions", createAuth(token));
 
-const publish = async (post, token) => 
+export const publish = async (post, token) =>
   instance.post("/posts", post, createAuth(token));
-;
 
-const getTrending = async (token) => 
+export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
+
+export const getPostsId = async (id, token) =>
+  instance.get(`/posts/${id}`, createAuth(token));
+
+export const getUserByName = async (name) => instance.get(`/users/name`, name);
+
+export const getTrending = async (token) => 
   instance.get("/hashtags/trending", createAuth(token));
-;
 
-const api = { signUp, signIn, publish, logout, getTrending };
+const api = {
+  signUp,
+  signIn,
+  publish,
+  logout,
+  getPosts,
+  getPostsId,
+  getUserByName,
+  getTrending,
+};
 
 export default api;
