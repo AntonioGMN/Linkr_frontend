@@ -1,6 +1,6 @@
-import PostStyle from "../../components/postsComponents/postStyled";
-import Snippet from "../../components/postsComponents/snippet";
-import Curtidas from "../../components/curtidas";
+import PostStyle from "../postsComponents/postStyled";
+import Snippet from "../postsComponents/snippet";
+import Curtidas from "../curtidas";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";

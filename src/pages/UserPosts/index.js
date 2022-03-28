@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import PostsStyle from "../../components/postsComponents/postsStyled";
 import ErroMensagem from "../../components/postsComponents/erroMensagem";
-import { getPostsId } from "../../services/api";
-import Post from "../Posts/Post";
+import api from "../../services/api";
+import Post from "../../components/Posts/Post";
 import Container from "../../components/container";
 import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
@@ -21,7 +21,7 @@ export default function UserPosts() {
 	const { id } = useParams();
 
 	useEffect(() => {
-		const promise = getPostsId(id, auth.token);
+		const promise = api.getPostsId(id, auth.token);
 		console.log(promise);
 		promise.then((response) => {
 			console.log(promise);
