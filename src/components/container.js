@@ -7,7 +7,7 @@ const Container = styled.div`
 
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: center;
 
 	img {
@@ -16,8 +16,8 @@ const Container = styled.div`
 		border-radius: 50px;
 	}
 
-	@media (max-width: 1000px) {
-		width: 100vw;
+	@media (max-width: 800px) {
+		width: 100%;
 	}
 `;
 

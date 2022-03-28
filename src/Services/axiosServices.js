@@ -21,8 +21,13 @@ function getPostsId(id, token) {
 	return promise;
 }
 
-function getUserByName(name) {
-	const promise = axios.get(`${Base_URL}/users/name`, name);
+function getUserByName(name, token) {
+	const dates = { name: name };
+	const promise = axios.post(
+		`${Base_URL}/users/name`,
+		dates,
+		createConfig(token)
+	);
 	return promise;
 }
 
