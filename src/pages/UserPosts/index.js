@@ -8,6 +8,7 @@ import Post from "../Posts/Post";
 import Container from "../../components/container";
 import MainDesktop from "../../components/mainDesktop";
 import DivStyle from "../../components/divStyle";
+import Header from "../../components/Header";
 
 import Title from "../Title";
 import Trending from "../trending";
@@ -58,6 +59,7 @@ export default function UserPosts() {
 		} else {
 			return (
 				<Container>
+					<Header />
 					<DivStyle>
 						<img src={posts[0].pictureUrl}></img>
 						<Title text={`${posts[0].name}` + "`s posts"} />

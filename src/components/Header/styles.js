@@ -20,6 +20,8 @@ const StyledHeader = styled.header`
     font-weight: bold;
     font-size: 49px;
     color: white;
+
+    cursor: pointer;
   }
 
   img {
