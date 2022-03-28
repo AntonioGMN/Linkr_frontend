@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const TitleStyle = styled.h1`
+	height: 64px;
+	width: 100%;
+
 	font-family: Oswald;
 	font-size: 43px;
 	font-style: normal;
@@ -10,12 +13,10 @@ const TitleStyle = styled.h1`
 
 	margin: 53px 0 43px 0;
 
-	position: static;
-	top: 125px;
-
 	@media (max-width: 1000px) {
+		max-width: 100%;
 		font-size: 33px;
-		margin-left: 17px;
+		padding-left: 17px;
 	}
 `;
 
