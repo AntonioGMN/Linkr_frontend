@@ -7,6 +7,7 @@ import Trending from "../trending";
 import Posts from "../Posts";
 import CreatePostCard from "./components/CreatePostCard";
 import Search from "../Search";
+import NewPostsBar from "../../components/newPosts";
 
 export default function Timeline() {
 	return (
@@ -17,6 +18,7 @@ export default function Timeline() {
 			<MainStyle>
 				<Column>
 					<CreatePostCard />
+					<NewPostsBar />
 					<Posts />
 				</Column>
 				<Trending />
