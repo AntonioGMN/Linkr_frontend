@@ -18,27 +18,29 @@ export default function Timeline() {
 
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
-	const [currentPostsNumber, setCurrentPostsNumber] = useState(0);
-
-	function getNewPosts() {
-		const promise = api.getPosts(auth.token);
-		promise.then((response) => {
-			if (response.data.length > currentPostsNumber)
-				setCurrentPostsNumber(response.data.length);
-		});
-		promise.catch(() => setIsError(true));
-	}
-
-	//SetInterval.start(getNewPosts, 1000, "test");
+	const [newPostsNumber, setNewPostsNumber] = useState(0);
+	let currentPostsNumber;
 
 	useEffect(() => {
 		const promise = api.getPosts(auth.token);
 		promise.then((response) => {
 			setPosts(response.data);
-			setCurrentPostsNumber(response.data.length);
+			currentPostsNumber = response.data.length;
 		});
 		promise.catch(() => setIsError(true));
 	}, []);
+
+	SetInterval.start(
+		() => {
+			const promise = api.getPosts(auth.token);
+			promise.then((response) => {
+				const valor = response.data.length - currentPostsNumber;
+				setNewPostsNumber(valor);
+			});
+		},
+		15000,
+		"test"
+	);
 
 	return (
 		<Container>
@@ -48,7 +50,7 @@ export default function Timeline() {
 			<MainStyle>
 				<Column>
 					<CreatePostCard />
-					<NewPostsBar></NewPostsBar>
+					<NewPostsBar NewPostsNumber={newPostsNumber}></NewPostsBar>
 					<Posts isError={isError} posts={posts} />
 				</Column>
 				<Trending />
