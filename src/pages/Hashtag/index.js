@@ -1,36 +1,34 @@
 import Container from "../../components/container";
 import { MainStyle, Column } from "../../components/mainStyle";
+import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
-
 import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../../components/Posts";
-import CreatePostCard from "../../components/CreatePostCard";
 import Search from "../Search";
-import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
 
-export default function Timeline() {
-  const { auth } = useAuth();
-
-  const [posts, setPosts] = useState(null);
+export default function Hashtag() {
+  const [posts, setPosts] = useState([]);
   const [isError, setIsError] = useState(false);
+  const { auth } = useAuth();
+  const { hashtag } = useParams();
 
   useEffect(() => {
-    const promise = api.getPosts(auth.token);
-    promise.then((response) => setPosts(response.data));
+    const promise = api.getPostsByHashtag({ hashtag, token: auth.token });
+    promise.then((response) => {
+      setPosts(response.data)});
     promise.catch(() => setIsError(true));
-  }, []);
+  }, [auth.token, hashtag]);
 
   return (
     <Container>
       <Header />
-      <Search page="timeline"></Search>
-      <Title text="timeline" />
+      <Title text={"#" + hashtag} />
       <MainStyle>
         <Column>
-          <CreatePostCard />
           <Posts isError={isError} posts={posts} />
         </Column>
         <Trending />
