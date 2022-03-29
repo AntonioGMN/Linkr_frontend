@@ -8,10 +8,12 @@ import CreatePostCard from "../../components/CreatePostCard";
 import Search from "../Search";
 import NewPostsBar from "../../components/newPosts";
 
-import SetInterval from "set-interval";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
+
+import SetInterval from "set-interval";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Timeline() {
 	const { auth } = useAuth();
@@ -38,9 +40,11 @@ export default function Timeline() {
 				setNewPostsNumber(valor);
 			});
 		},
-		15000,
+		2000,
 		"test"
 	);
+
+	function loadFunc() {}
 
 	return (
 		<Container>
