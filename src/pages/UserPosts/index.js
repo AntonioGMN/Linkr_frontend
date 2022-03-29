@@ -45,6 +45,7 @@ export default function UserPosts() {
 		if (posts.length === 0) {
 			return (
 				<Container>
+					<Header />
 					<Title text="timeline" />
 					<MainStyle>
 						<PostsStyle>
