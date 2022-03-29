@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import useAuth from "../../hooks/useAuth"
@@ -40,6 +40,11 @@ export default function Post({ list }) {
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
 
+	const [editing, setEditing] = useState(false);
+	const [text, setText] = useState()
+	const inputFocus = useRef();
+
+
 	async function deletePost(id) {
 		setDeletingPost(true);
 
@@ -53,6 +58,10 @@ export default function Post({ list }) {
 			setDeletionModalIsOpen(false);
 			setDeletingPost(false);
 		}
+	}
+
+	function handleEditPost() {
+		console.log(inputFocus.current.value)
 	}
 
 	Modal.setAppElement(".root");
@@ -112,11 +121,18 @@ export default function Post({ list }) {
 				</section>
 				<div>
 					<Link to={`/users/${p.authorId}`}>{p.name}</Link>
-					<span>
+					<textarea
+						type="text"
+						placeholder="Awesome article about #javascript"
+						value={text}
+						onChange={(e) => setText(e.target.value)}
+						ref={inputFocus}
+						disabled={editing}
+        	>
 						<HashtagsComponent>
 							{p.text}
 						</HashtagsComponent>
-					</span>
+					</textarea>
 					<Snippet href={p.link} target="_blank">
 						<div>
 							<p>{p.linkTitle}</p>
