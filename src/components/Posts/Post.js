@@ -2,8 +2,8 @@ import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
 import PostDeletionModal from "../postsComponents/PostDeletionModal";
 import Curtidas from "../curtidas";
-import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { useState, useRef } from "react";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
@@ -16,6 +16,10 @@ export default function Post({ list }) {
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+
+	const [editing, setEditing] = useState(false);
+	const [text, setText] = useState()
+	const inputFocus = useRef(null);
 
 	async function deletePost(id) {
 		setDeletingPost(true);
@@ -30,6 +34,13 @@ export default function Post({ list }) {
 			setDeletionModalIsOpen(false);
 			setDeletingPost(false);
 		}
+	}
+
+	function editPost(postId) {
+		inputFocus.current.focus();
+		console.log(inputFocus.current)
+		console.log(postId)
+		setEditing(true)
 	}
 
 	const postDeletionModalProps = {
@@ -48,15 +59,26 @@ export default function Post({ list }) {
 				<PostStyle key={p.id}>
 					{ // A user can only delete your own posts
 					p.name === auth.userName && 
-					(<FaTrash
-						className="trash-icon"
-						size={20}
-						style={{fill: 'white'}}
-						onClick={() => {
-							setPostToBeDeletedId(p.id);
-							setDeletionModalIsOpen(true);
-						}}
-					/>)}
+					(<div className="icons">
+						<FaPencilAlt
+							className="edit-icon"
+							size={20}
+							style={{fill: 'white'}}
+							onClick={() => {
+								editPost(p.id);
+								setDeletionModalIsOpen(true);
+							}}
+						/>
+						<FaTrash
+							className="trash-icon"
+							size={20}
+							style={{fill: 'white'}}
+							onClick={() => {
+								setPostToBeDeletedId(p.id);
+								setDeletionModalIsOpen(true);
+							}}
+						/>
+				</div>)}
 
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
@@ -69,12 +91,19 @@ export default function Post({ list }) {
 					</section>
 					<div>
 						<Link to={`/users/${p.authorId}`}>{p.name}</Link>
-						<span>
-							{p.text}{" "}
-							{p.hashtags.map((h) => {
-								return <strong key={uuidv4()}>#{h} </strong>;
-							})}
-						</span>
+						{editing ? (
+							<textarea
+								value={p.text}
+								ref={inputFocus}
+							/>
+						) : (
+							<span>
+								{p.text}{" "}
+								{p.hashtags.map((h) => {
+									return <strong key={uuidv4()}>#{h} </strong>;
+								})}
+							</span>
+						)}
 						<Snippet href={p.link} target="_blank">
 							<div>
 								<p>{p.linkTitle}</p>
