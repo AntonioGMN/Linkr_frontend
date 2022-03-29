@@ -16,11 +16,39 @@ export default function Post({ list }) {
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+	
+	function isLikedByUser(post) {
+		return post.likes.map(l => l.userId).includes(auth.userId);
+	}
 
-	async function toggleLike(id) {
+	const [userLikes, setUserLikes] = useState(
+		list.map(isLikedByUser)
+	);
+
+	const [likeCount, setLikeCount] = useState(
+		list.map(p => p.likes.length)
+	);
+
+	const [toggleLikeLock, setToggleLikeLock] = useState(false);
+
+	async function toggleLike(id, index) {
+		if(toggleLikeLock) return;
+
+		setToggleLikeLock(true);
+		setTimeout(() => setToggleLikeLock(false), 500);
+
 		try {
 			await api.toggleLikePost(id, auth.token);
-			window.location.reload();
+			
+			const newUserLikes = [...userLikes];
+			newUserLikes[index] = !userLikes[index];
+			setUserLikes(newUserLikes);
+
+			const newLikeCount = [...likeCount];
+			newLikeCount[index] = userLikes[index] ?
+				likeCount[index] - 1 :
+				likeCount[index] + 1;
+			setLikeCount(newLikeCount);
 		} catch (error) {
 			alert(error.response.data);
 		}
@@ -53,7 +81,7 @@ export default function Post({ list }) {
 		<>
 			<PostDeletionModal {... postDeletionModalProps} />
 
-			{list.map((p) => 
+			{list.map((p, index) =>
 				<PostStyle key={p.id}>
 					{ // A user can only delete your own posts
 					p.authorId === auth.userId && 
@@ -70,11 +98,11 @@ export default function Post({ list }) {
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
 						<Curtidas>
-							{p.likes.map(l => l.userId).includes(auth.userId) ?
-								<LikedIcon onClick={() => toggleLike(p.id)} /> :
-								<NotLikedIcon onClick={() => toggleLike(p.id)} />}
+							{userLikes[index] ?
+								<LikedIcon onClick={() => toggleLike(p.id, index)} /> :
+								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />}
 							<span>
-								{p.likes.length} likes
+								{likeCount[index]} likes
 							</span>
 						</Curtidas>
 					</section>
