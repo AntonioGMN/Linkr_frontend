@@ -1,4 +1,18 @@
+import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import styled from "styled-components";
+
+export function NotLikedIcon({ onClick }) {
+	return (
+		<AiOutlineHeart size={30} style={{fill: "white"}} onClick={onClick} />
+	);
+}
+
+export function LikedIcon({ onClick }) {
+	return (
+		<AiFillHeart size={30} style={{fill: "red"}} onClick={onClick} />
+	);
+}
 
 const Curtidas = styled.div`
 	width: 50px;

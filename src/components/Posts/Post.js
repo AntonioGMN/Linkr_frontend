@@ -1,12 +1,12 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
 import PostDeletionModal from "../postsComponents/PostDeletionModal";
-import Curtidas from "../curtidas";
+import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth"
-import api from "../../services/api"
-import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
+import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
+
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,6 +16,15 @@ export default function Post({ list }) {
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+
+	async function toggleLike(id) {
+		try {
+			await api.toggleLikePost(id, auth.token);
+			window.location.reload();
+		} catch (error) {
+			alert(error.response.data);
+		}
+	}
 
 	async function deletePost(id) {
 		setDeletingPost(true);
@@ -47,7 +56,7 @@ export default function Post({ list }) {
 			{list.map((p) => 
 				<PostStyle key={p.id}>
 					{ // A user can only delete your own posts
-					p.name === auth.userName && 
+					p.authorId === auth.userId && 
 					(<FaTrash
 						className="trash-icon"
 						size={20}
@@ -61,9 +70,11 @@ export default function Post({ list }) {
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
 						<Curtidas>
+							{p.likes.map(l => l.userId).includes(auth.userId) ?
+								<LikedIcon onClick={() => toggleLike(p.id)} /> :
+								<NotLikedIcon onClick={() => toggleLike(p.id)} />}
 							<span>
-								<CurtidaIcon size={30} style={{fill: "white"}} />
-								Curtidas
+								{p.likes.length} likes
 							</span>
 						</Curtidas>
 					</section>

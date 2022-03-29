@@ -38,6 +38,9 @@ const getUserByName = async (name) => instance.get(`/users?name=${name}`);
 const getTrending = async (token) =>
   instance.get("/hashtags/trending", createAuth(token));
 
+const toggleLikePost = async (id, token) =>
+  instance.post(`/posts/${id}/toggle-like`, null, createAuth(token));
+
 const api = {
   signUp,
   signIn,
@@ -49,6 +52,7 @@ const api = {
   getUserByName,
   getTrending,
   getPostsByHashtag,
+  toggleLikePost,
 };
 
 export default api;
