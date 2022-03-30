@@ -15,7 +15,7 @@ export default function CreatePostCard() {
 		api
 			.publish({ text, link }, auth.token)
 			.then(() => {
-				//window.location.reload();
+				window.location.reload();
 				setLoading(false);
 			})
 			.catch(() => {
