@@ -1,4 +1,18 @@
+import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import styled from "styled-components";
+
+export function NotLikedIcon({ onClick }) {
+	return (
+		<AiOutlineHeart size={30} style={{fill: "white"}} onClick={onClick} />
+	);
+}
+
+export function LikedIcon({ onClick }) {
+	return (
+		<AiFillHeart size={30} style={{fill: "red"}} onClick={onClick} />
+	);
+}
 
 const Curtidas = styled.div`
 	width: 50px;
@@ -14,6 +28,21 @@ const Curtidas = styled.div`
 		text-align: center;
 		color: #ffffff;
 	}
+
+	.like-tooltip {
+		width: 500px;
+		height: 20px;
+
+		font-weight: bold;
+		font-size: 11px;
+	}
+
+	/* .like-tooltip {
+		text-align: center;
+
+	  margin-top: 200px;
+  	height: 40px;
+	} */
 
 	@media (max-width: 800px) {
 		width: 40px;
