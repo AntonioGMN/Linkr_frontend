@@ -4,8 +4,8 @@ import PostDeletionModal from "../postsComponents/PostDeletionModal";
 import Curtidas from "../curtidas";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth"
-import api from "../../services/api"
+import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
 import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -38,31 +38,34 @@ export default function Post({ list }) {
 		deletingPost,
 		postToBeDeletedId,
 		deletePost,
-	}
+	};
 
 	return (
 		<>
-			<PostDeletionModal {... postDeletionModalProps} />
+			<PostDeletionModal {...postDeletionModalProps} />
 
-			{list.map((p) => 
+			{list.map((p) => (
 				<PostStyle key={p.id}>
-					{ // A user can only delete your own posts
-					p.name === auth.userName && 
-					(<FaTrash
-						className="trash-icon"
-						size={20}
-						style={{fill: 'white'}}
-						onClick={() => {
-							setPostToBeDeletedId(p.id);
-							setDeletionModalIsOpen(true);
-						}}
-					/>)}
+					{
+						// A user can only delete your own posts
+						p.name === auth.userName && (
+							<FaTrash
+								className="trash-icon"
+								size={20}
+								style={{ fill: "white" }}
+								onClick={() => {
+									setPostToBeDeletedId(p.id);
+									setDeletionModalIsOpen(true);
+								}}
+							/>
+						)
+					}
 
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
 						<Curtidas>
 							<span>
-								<CurtidaIcon size={30} style={{fill: "white"}} />
+								<CurtidaIcon size={30} style={{ fill: "white" }} />
 								Curtidas
 							</span>
 						</Curtidas>
@@ -85,7 +88,7 @@ export default function Post({ list }) {
 						</Snippet>
 					</div>
 				</PostStyle>
-			)}
+			))}
 		</>
 	);
 }

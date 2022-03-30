@@ -65,9 +65,7 @@ export default function Search({ page }) {
 					placeholder={"Search for people and friends"}
 					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						getUsers();
-						if (name.length === 0) setShowUsers(false);
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
