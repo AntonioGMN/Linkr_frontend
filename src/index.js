@@ -5,4 +5,4 @@ import App from "./App";
 import "./styles/index.css";
 import UseRefTest from "./UseRefTest";
 
-ReactDOM.render(<UseRefTest />, document.querySelector(".root"));
+ReactDOM.render(<App />, document.querySelector(".root"));

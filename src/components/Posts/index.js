@@ -1,6 +1,6 @@
 import PostsStyle from "../postsComponents/postsStyled";
 import ErroMensagem from "../postsComponents/erroMensagem";
-import Post from "./Post";
+import PostsList from "./PostsList";
 
 export default function Posts({ posts, isError }) {
   if (posts === null && isError) {
@@ -30,7 +30,7 @@ export default function Posts({ posts, isError }) {
     } else {
       return (
         <PostsStyle>
-          <Post list={posts} />{" "}
+          <PostsList list={posts} />{" "}
         </PostsStyle>
       );
     }

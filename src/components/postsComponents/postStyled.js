@@ -65,6 +65,23 @@ const PostStyle = styled.article`
 		color: #ffffff;
 	}
 
+	textarea {
+		all: unset;
+		box-sizing: border-box;
+
+		width: 100%;
+		height: 44px;
+		margin-top: 5px;
+		padding: 9px;
+
+		background: #FFFFFF;
+		border-radius: 7px;
+
+		:disabled {
+			opacity: 0.7;
+		}
+	}
+
 	.icons {
 		width: 57px;
 		height: 20px;
@@ -73,7 +90,7 @@ const PostStyle = styled.article`
 		justify-content: space-between;
 
 		position: absolute;
-		top: 23px;
+		top: 21px;
 		right: 23px;
 	}
 

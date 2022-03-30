@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import PostsStyle from "../../components/postsComponents/postsStyled";
 import ErroMensagem from "../../components/postsComponents/erroMensagem";
 import api from "../../services/api";
-import Post from "../../components/Posts/Post";
+import PostsList from "../../components/Posts/PostsList";
 import Container from "../../components/container";
 import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
@@ -65,7 +65,7 @@ export default function UserPosts() {
 					</DivStyle>
 					<MainStyle>
 						<PostsStyle>
-							<Post list={posts} />
+							<PostsList list={posts} />
 						</PostsStyle>
 						<Trending />
 					</MainStyle>
