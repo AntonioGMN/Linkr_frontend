@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const MainStyle = styled.main`
 	width: 100%;
+	max-height: 100%;
 
 	display: flex;
 	gap: 25px;

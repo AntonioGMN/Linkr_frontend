@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import {
 	SearchStyleHeader,
@@ -8,8 +8,8 @@ import {
 	SearchStyleTimeline,
 } from "./styles";
 import { Link } from "react-router-dom";
-import { getUserByName } from "../../services/api";
 import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
 
 export default function Search({ page }) {
 	const [name, setName] = useState("");
@@ -17,30 +17,26 @@ export default function Search({ page }) {
 	const [showUsers, setShowUsers] = useState(false);
 	const { auth } = useAuth();
 
-	function getUsers() {
-		const promise = getUserByName(name, auth.token);
+	function getUsers(name) {
+		const promise = api.getUserByName(name, auth.token);
 		promise.then((response) => {
-			setUsers(response.data);
+			setUsers(response.data)
+			if(name.length === 0) setShowUsers(false)
+			else setShowUsers(true);
 		});
-		setShowUsers(true);
+		promise.catch((err) => setShowUsers(false));
 	}
-
-	useEffect(() => {
-		if (name.length === 0) setShowUsers(false);
-	});
 
 	if (page === "header") {
 		return (
 			<SearchStyleHeader visibiliti={showUsers}>
 				<DebounceInput
-					minLength={2}
+					minLength={3}
 					debounceTimeout={300}
 					style={DebounceInputStyleHeader}
 					placeholder={"Search for people"}
-					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						getUsers();
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>

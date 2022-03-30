@@ -26,8 +26,8 @@ export default function Trending() {
 			</div>
 			<hr />
 			<div>
-				{hashtags.map(({ name }) => (
-					<Link to={`/hashtag/${name}`}>
+				{hashtags.map(({ name }, index) => (
+					<Link to={`/hashtag/${name}`} key={index}>
 						<strong>
 							<h2>#{name}</h2>
 						</strong>
