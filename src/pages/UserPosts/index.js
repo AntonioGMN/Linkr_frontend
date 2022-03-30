@@ -10,6 +10,7 @@ import Header from "../../components/Header";
 import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../../components/Posts";
+import FollowButton from "../../components/FollowButton";
 
 export default function UserPosts() {
   const { auth } = useAuth();
@@ -38,12 +39,15 @@ export default function UserPosts() {
           <>
             <img src={posts[0]?.pictureUrl} alt="avatar"></img>
             <Title text={`${posts[0]?.name}'s posts`} />
+            <FollowButton userId={id} auth={auth}/>
           </>
         )}
       </DivStyle>
       <MainStyle>
         <Posts isError={isError} posts={posts} />
-        <Trending />
+        <div>
+          <Trending />
+        </div>
       </MainStyle>
     </Container>
   );
