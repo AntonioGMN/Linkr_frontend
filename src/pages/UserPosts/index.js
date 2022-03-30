@@ -21,7 +21,6 @@ export default function UserPosts() {
 
   useEffect(() => {
     const promise = api.getPostsId(id, auth.token);
-    console.log(promise);
     promise.then((response) => setPosts(response.data));
     promise.catch(() => setIsError(true));
   }, []);

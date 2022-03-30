@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../services/api";
 
 export default function FollowButton({ userId, auth }) {
   const [loading, setLoading] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
 
+  useEffect(() => {
+    api
+      .getFollows(userId, auth.token)
+      .then((res) => {
+        const isFollowing = res.data.some(
+          ({ followedId }) => followedId === Number(userId)
+        );
+        setIsFollowing(isFollowing);
+      })
+      .catch(() => alert("An error occurred getting follows"));
+  }, [auth.token, userId]);
   let text;
   if (loading) {
     text = "Loading...";
   } else if (isFollowing) {
-    text = "Follow";
-  } else {
     text = "Unfollow";
+  } else {
+    text = "Follow";
   }
-
   function handleSuccess() {
     setIsFollowing(!isFollowing);
     setLoading(false);
@@ -25,15 +35,11 @@ export default function FollowButton({ userId, auth }) {
   }
   function handleClick() {
     setLoading(true);
-    // if (isFollowing) {
-    //  api.unfollowUser(userId, auth.token).then(handleSuccess).catch(handleError);
-    // } else {
-    api.follow(userId, auth.token).then(handleSuccess).catch(handleError);
-    //  }
+    api.toggleFollow(userId, auth.token).then(handleSuccess).catch(handleError);
   }
-
   return (
     <Button
+      isOwner={auth.userId === Number(userId)}
       disabled={loading}
       isLoading={loading}
       isFollowing={isFollowing}
@@ -48,7 +54,7 @@ const Button = styled.button`
   all: unset;
   box-sizing: border-box;
 
-  display: flex;
+  display: ${({ isOwner }) => (isOwner ? "none" : "flex")};
   justify-content: center;
   align-items: center;
 
@@ -58,12 +64,12 @@ const Button = styled.button`
   background: #1877f2;
   border-radius: 5px;
   border-radius: 6px;
-  background-color: ${({ isFollowing }) => (isFollowing ? "#1877f2" : "#FFF")};
+  background-color: ${({ isFollowing }) => (isFollowing ? "#FFF" : "#1877f2")};
 
   font-family: Oswald;
   font-weight: bold;
   font-size: 17px;
-  color: ${({ isFollowing }) => (isFollowing ? "#FFF" : "#1877f2")};
+  color: ${({ isFollowing }) => (isFollowing ? "#1877f2" : "#FFF")};
   opacity: ${({ isLoading }) => (isLoading ? 0.7 : 1)};
   pointer-events: ${({ isLoading }) => (isLoading ? "none" : "all")};
   :hover {
