@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 export function NotLikedIcon({ onClick }) {
 	return (
-		<AiOutlineHeart size={30} style={{fill: "white"}} onClick={onClick} />
+		<AiOutlineHeart className="icon" size={25} style={{fill: "white"}} onClick={onClick} />
 	);
 }
 
 export function LikedIcon({ onClick }) {
 	return (
-		<AiFillHeart size={30} style={{fill: "red"}} onClick={onClick} />
+		<AiFillHeart className="icon" size={25} style={{fill: "red"}} onClick={onClick} />
 	);
 }
 
@@ -20,7 +20,13 @@ const Curtidas = styled.div`
 	display: flex;
 	flex-direction: column;
 
+	.icon {
+		align-self: center;
+	}
+
 	span {
+		align-self: center;
+
 		font-size: 11px;
 		font-weight: 400;
 		line-height: 13px;
@@ -29,13 +35,13 @@ const Curtidas = styled.div`
 		color: #ffffff;
 	}
 
-	.like-tooltip {
+	/* .like-tooltip {
 		width: 500px;
 		height: 20px;
 
 		font-weight: bold;
 		font-size: 11px;
-	}
+	} */
 
 	/* .like-tooltip {
 		text-align: center;

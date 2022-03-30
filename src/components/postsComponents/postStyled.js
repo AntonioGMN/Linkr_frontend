@@ -9,7 +9,7 @@ const PostStyle = styled.article`
 	background-color: #171717;
 	display: flex;
 	gap: 18px;
-	padding: 20px 90px 20px 20px;
+	padding: 20px;
 
 	img {
 		width: 50px;
@@ -19,7 +19,6 @@ const PostStyle = styled.article`
 	}
 
 	div {
-		height: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -73,6 +72,12 @@ const PostStyle = styled.article`
 		position: absolute;
 		top: 23px;
 		right: 23px;
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 	}
 
 	@media (max-width: 800px) {

@@ -61,7 +61,7 @@ export default function UserPosts() {
 					<Header />
 					<DivStyle>
 						<img src={posts[0].pictureUrl}></img>
-						<Title text={`${posts[0].name}` + "`s posts"} />
+						<Title text={`${posts[0].name}’s posts`} />
 					</DivStyle>
 					<MainStyle>
 						<PostsStyle>

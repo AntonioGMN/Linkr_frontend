@@ -2,9 +2,10 @@ import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
 import PostDeletionModal from "../postsComponents/PostDeletionModal";
 import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
+import Comments, { CommentIcon } from "../comments";
+import Reposts, { RepostIcon } from "../reposts";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import ReactTooltip from "react-tooltip";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
 
@@ -108,6 +109,18 @@ export default function Post({ list }) {
 								{likeCount[index]} likes
 							</span>
 						</Curtidas>
+						<Comments>
+							<CommentIcon />
+							<span>
+								{index} comments
+							</span>
+						</Comments>
+						<Reposts>
+							<RepostIcon />
+							<span>
+								{index} re-posts
+							</span>
+						</Reposts>
 					</section>
 					<div>
 						<Link to={`/users/${p.authorId}`}>{p.name}</Link>

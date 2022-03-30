@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import Modal from "react-modal";
 
 import { ModalText, ModalButtonsDiv, ModalButton } from "./styles";
