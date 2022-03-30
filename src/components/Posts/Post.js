@@ -36,7 +36,6 @@ export default function Post({ list }) {
 		if(toggleLikeLock) return;
 
 		setToggleLikeLock(true);
-		setTimeout(() => setToggleLikeLock(false), 500);
 
 		try {
 			await api.toggleLikePost(id, auth.token);
@@ -50,25 +49,11 @@ export default function Post({ list }) {
 				likeCount[index] - 1 :
 				likeCount[index] + 1;
 			setLikeCount(newLikeCount);
+
+			setToggleLikeLock(false);
 		} catch (error) {
 			alert(error.response.data);
-		}
-	}
-
-	function likeTooltip(post) {
-		const userNames = post.likes
-			.map(like => like.userId === auth.userId ? "You" : like.userName)
-			.sort((a, _) => a === "You" ? -1 : 1);
-			
-		switch (userNames.length) {
-			case 0:
-				return "Nobody";
-			case 1:
-				return `${userNames[0]}`;
-			case 2:
-				return `${userNames[0]}, ${userNames[1]}`;
-			default:
-				return `${userNames[0]}, ${userNames[1]} and other ${userNames.length - 2}`;
+			setToggleLikeLock(false);
 		}
 	}
 
@@ -115,17 +100,13 @@ export default function Post({ list }) {
 
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
-						<Curtidas data-tip={likeTooltip(p)}>
+						<Curtidas>
 							{userLikes[index] ?
 								<LikedIcon onClick={() => toggleLike(p.id, index)} /> :
 								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />}
-							<span onClick={() => alert(likeTooltip(p))}>
+							<span>
 								{likeCount[index]} likes
 							</span>
-
-							<ReactTooltip className="like-tooltip" place="bottom" effect="solid" type="light">
-							{likeTooltip(p)}
-							</ReactTooltip>
 						</Curtidas>
 					</section>
 					<div>
