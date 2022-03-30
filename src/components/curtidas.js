@@ -29,6 +29,21 @@ const Curtidas = styled.div`
 		color: #ffffff;
 	}
 
+	.like-tooltip {
+		width: 500px;
+		height: 20px;
+
+		font-weight: bold;
+		font-size: 11px;
+	}
+
+	/* .like-tooltip {
+		text-align: center;
+
+	  margin-top: 200px;
+  	height: 40px;
+	} */
+
 	@media (max-width: 800px) {
 		width: 40px;
 
