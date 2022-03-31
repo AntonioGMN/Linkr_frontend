@@ -41,6 +41,9 @@ const getTrending = async (token) =>
 const toggleLikePost = async (id, token) =>
   instance.post(`/posts/${id}/toggle-like`, null, createAuth(token));
 
+const repost = async (id, token) =>
+  instance.post(`posts/${id}/repost`, null, createAuth(token));
+
 const api = {
   signUp,
   signIn,
@@ -53,6 +56,7 @@ const api = {
   getTrending,
   getPostsByHashtag,
   toggleLikePost,
+  repost,
 };
 
 export default api;

@@ -58,6 +58,31 @@ export default function Post({ list }) {
 		}
 	}
 
+	const [repostCounts, setRepostCounts] = useState(
+		list.map(p => parseInt(p.repostCount.count))
+	);
+
+	const [repostLock, setRepostLock] = useState(false);
+
+	async function repost(id, index) {
+		if(repostLock) return;
+
+		setRepostLock(true);
+
+		try {
+			await api.repost(id, auth.token);
+			
+			const newRepostCounts = [...repostCounts];
+			newRepostCounts[index] = repostCounts[index] + 1;
+			setRepostCounts(newRepostCounts);
+
+			setRepostLock(false);
+		} catch (error) {
+			alert(error.response.data);
+			setRepostLock(false);
+		}
+	}
+
 	async function deletePost(id) {
 		setDeletingPost(true);
 
@@ -116,9 +141,9 @@ export default function Post({ list }) {
 							</span>
 						</Comments>
 						<Reposts>
-							<RepostIcon />
+							<RepostIcon onClick={() => repost(p.id, index)} />
 							<span>
-								{index} re-posts
+								{repostCounts[index]} re-posts
 							</span>
 						</Reposts>
 					</section>
