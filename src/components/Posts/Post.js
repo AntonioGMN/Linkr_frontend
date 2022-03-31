@@ -1,6 +1,6 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
-import PostDeletionModal from "../postsComponents/PostDeletionModal";
+import PostModal from "../postsComponents/PostModal";
 import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
 import Comments, { CommentIcon } from "../comments";
 import Reposts, { RepostIcon } from "../reposts";
@@ -18,6 +18,10 @@ export default function Post({ list }) {
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+	
+	const [repostModalIsOpen, setRepostModalIsOpen] = useState(false);
+	const [reposting, setReposting] = useState(false);
+	const [postToBeSharedId, setPostToBeSharedId] = useState(null);
 	
 	function isLikedByUser(post) {
 		return post.likes.map(l => l.userId).includes(auth.userId);
@@ -58,28 +62,18 @@ export default function Post({ list }) {
 		}
 	}
 
-	const [repostCounts, setRepostCounts] = useState(
-		list.map(p => parseInt(p.repostCount.count))
-	);
-
-	const [repostLock, setRepostLock] = useState(false);
-
-	async function repost(id, index) {
-		if(repostLock) return;
-
-		setRepostLock(true);
+	async function repost(id) {
+		setReposting(true);
 
 		try {
 			await api.repost(id, auth.token);
-			
-			const newRepostCounts = [...repostCounts];
-			newRepostCounts[index] = repostCounts[index] + 1;
-			setRepostCounts(newRepostCounts);
-
-			setRepostLock(false);
+			setRepostModalIsOpen(false);
+			window.location.reload();
+			setReposting(false);
 		} catch (error) {
 			alert(error.response.data);
-			setRepostLock(false);
+			setRepostModalIsOpen(false);
+			setReposting(false);
 		}
 	}
 
@@ -99,16 +93,36 @@ export default function Post({ list }) {
 	}
 
 	const postDeletionModalProps = {
-		deletionModalIsOpen,
-		setDeletionModalIsOpen,
-		deletingPost,
-		postToBeDeletedId,
-		deletePost,
+		modalIsOpen: deletionModalIsOpen,
+		setModalIsOpen: setDeletionModalIsOpen,
+		loading: deletingPost,
+		loadingText: "Deleting post...",
+		action: () => deletePost(postToBeDeletedId),
+		cancelText: "No, go back",
+		confirmText: "Yes, delete it",
+	}
+
+	const repostModalProps = {
+		modalIsOpen: repostModalIsOpen,
+		setModalIsOpen: setRepostModalIsOpen,
+		loading: reposting,
+		loadingText: "Re-posting...",
+		action: () => repost(postToBeSharedId),
+		cancelText: "No, cancel",
+		confirmText: "Yes, share!",
 	}
 
 	return (
 		<>
-			<PostDeletionModal {... postDeletionModalProps} />
+			<PostModal {...postDeletionModalProps}>
+				Are you sure you want
+				<br /> to delete this post?
+			</PostModal>
+
+			<PostModal {...repostModalProps}>
+				Do you want to re-post
+				<br /> this link?
+			</PostModal>
 
 			{list.map((p, index) =>
 				<PostStyle key={p.id}>
@@ -141,9 +155,12 @@ export default function Post({ list }) {
 							</span>
 						</Comments>
 						<Reposts>
-							<RepostIcon onClick={() => repost(p.id, index)} />
+							<RepostIcon onClick={() => {
+							setPostToBeSharedId(p.id);
+							setRepostModalIsOpen(true);
+						}} />
 							<span>
-								{repostCounts[index]} re-posts
+								{parseInt(p.repostCount.count)} re-posts
 							</span>
 						</Reposts>
 					</section>
