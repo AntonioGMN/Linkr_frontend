@@ -29,6 +29,9 @@ export const deletePost = async (id, token) =>
 export const getPosts = async (token) =>
 	instance.get(`/posts`, createAuth(token));
 
+const getPostsPage = async (page, token) =>
+	instance.get(`/posts?page=${page}`, createAuth(token));
+
 const getPostsByHashtag = async ({ hashtag, token }) =>
 	instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
 
@@ -56,6 +59,7 @@ const api = {
 	getUserById,
 	getTrending,
 	getPostsByHashtag,
+	getPostsPage,
 };
 
 export default api;

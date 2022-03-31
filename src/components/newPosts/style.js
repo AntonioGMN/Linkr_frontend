@@ -5,9 +5,11 @@ const NewPostsBarStyle = styled.section`
 	background: #1877f2;
 	border-radius: 16px;
 	box-shadow: 0px 4px 4px 0px #00000040;
-	display: ${(props) => (props.show ? "flex" : "none")};
+	display: flex;
+	/* display: ${(props) => (props.show ? "flex" : "none")}; */
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 
 	p {
 		font-size: 16px;
