@@ -24,36 +24,36 @@ export default function CreatePostCard() {
 			});
 	}
 
-  return (
-    <Container>
-      <div>
-        <Avatar src={auth.userPicture} alt="avatar" />
-      </div>
-      <Form onSubmit={handleSubmit}>
-        <span>What are you going to share today?</span>
-        <input
-          type="url"
-          placeholder="http://..."
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          disabled={loading}
-          required
-        />
-        <textarea
-          type="text"
-          placeholder="Awesome article about #javascript"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          disabled={loading}
-        />
-        <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Publishing..." : "Publish"}
-          </button>
-        </div>
-      </Form>
-    </Container>
-  );
+	return (
+		<Container>
+			<div>
+				<Avatar src={auth.userPicture} alt="avatar" />
+			</div>
+			<Form onSubmit={handleSubmit}>
+				<span>What are you going to share today?</span>
+				<input
+					type="url"
+					placeholder="http://..."
+					value={link}
+					onChange={(e) => setLink(e.target.value)}
+					disabled={loading}
+					required
+				/>
+				<textarea
+					type="text"
+					placeholder="Awesome article about #javascript"
+					value={text}
+					onChange={(e) => setText(e.target.value)}
+					disabled={loading}
+				/>
+				<div>
+					<button type="submit" disabled={loading}>
+						{loading ? "Publishing..." : "Publish"}
+					</button>
+				</div>
+			</Form>
+		</Container>
+	);
 }
 
 const Container = styled.div`

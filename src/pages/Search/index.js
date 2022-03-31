@@ -17,18 +17,14 @@ export default function Search({ page }) {
 	const [showUsers, setShowUsers] = useState(false);
 	const { auth } = useAuth();
 
-	function getUsers() {
+	function getUsers(name) {
 		const promise = api.getUserByName(name, auth.token);
 		promise.then((response) => {
-			console.log(response.data);
-			setUsers(response.data);
+			setUsers(response.data)
+			if(name.length === 0) setShowUsers(false)
+			else setShowUsers(true);
 		});
-
-		if (users.length === 0 || name.length === 0) setShowUsers(false);
-		else {
-			setUsers([]);
-			setShowUsers(true);
-		}
+		promise.catch((err) => setShowUsers(false));
 	}
 
 	if (page === "header") {
@@ -39,20 +35,16 @@ export default function Search({ page }) {
 					debounceTimeout={300}
 					style={DebounceInputStyleHeader}
 					placeholder={"Search for people"}
-					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
-						getUsers();
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
 					{users.map((u) => {
 						return (
-							<Link to={`/users/${u.id}`}>
-								<button key={u.id}>
-									<img src={u.pictureUrl}></img>
+							<Link to={`/users/${u.id}`} key={u.id}>
+								<button>
+									<img src={u.pictureUrl} alt="erro"></img>
 									<p>{u.name}</p>
 								</button>
 							</Link>
@@ -73,18 +65,15 @@ export default function Search({ page }) {
 					placeholder={"Search for people and friends"}
 					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
-						getUsers();
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
 					{users.map((u) => {
 						return (
-							<Link to={`/users/${u.id}`}>
-								<button key={u.id}>
-									<img src={u.pictureUrl}></img>
+							<Link to={`/users/${u.id}`} key={u.id}>
+								<button>
+									<img src={u.pictureUrl} alt="erro"></img>
 									<p>{u.name}</p>
 								</button>
 							</Link>

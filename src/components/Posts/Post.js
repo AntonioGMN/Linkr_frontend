@@ -17,37 +17,33 @@ export default function Post({ list }) {
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
 	const [deletingPost, setDeletingPost] = useState(false);
 	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
-	
+
 	function isLikedByUser(post) {
-		return post.likes.map(l => l.userId).includes(auth.userId);
+		return post.likes.map((l) => l.userId).includes(auth.userId);
 	}
 
-	const [userLikes, setUserLikes] = useState(
-		list.map(isLikedByUser)
-	);
+	const [userLikes, setUserLikes] = useState(list.map(isLikedByUser));
 
-	const [likeCount, setLikeCount] = useState(
-		list.map(p => p.likes.length)
-	);
+	const [likeCount, setLikeCount] = useState(list.map((p) => p.likes.length));
 
 	const [toggleLikeLock, setToggleLikeLock] = useState(false);
 
 	async function toggleLike(id, index) {
-		if(toggleLikeLock) return;
+		if (toggleLikeLock) return;
 
 		setToggleLikeLock(true);
 
 		try {
 			await api.toggleLikePost(id, auth.token);
-			
+
 			const newUserLikes = [...userLikes];
 			newUserLikes[index] = !userLikes[index];
 			setUserLikes(newUserLikes);
 
 			const newLikeCount = [...likeCount];
-			newLikeCount[index] = userLikes[index] ?
-				likeCount[index] - 1 :
-				likeCount[index] + 1;
+			newLikeCount[index] = userLikes[index]
+				? likeCount[index] - 1
+				: likeCount[index] + 1;
 			setLikeCount(newLikeCount);
 
 			setToggleLikeLock(false);
@@ -78,35 +74,38 @@ export default function Post({ list }) {
 		deletingPost,
 		postToBeDeletedId,
 		deletePost,
-	}
+	};
 
 	return (
 		<>
-			<PostDeletionModal {... postDeletionModalProps} />
+			<PostDeletionModal {...postDeletionModalProps} />
 
-			{list.map((p, index) =>
+			{list.map((p, index) => (
 				<PostStyle key={p.id}>
-					{ // A user can only delete your own posts
-					p.authorId === auth.userId && 
-					(<FaTrash
-						className="trash-icon"
-						size={20}
-						style={{fill: 'white'}}
-						onClick={() => {
-							setPostToBeDeletedId(p.id);
-							setDeletionModalIsOpen(true);
-						}}
-					/>)}
+					{
+						// A user can only delete your own posts
+						p.authorId === auth.userId && (
+							<FaTrash
+								className="trash-icon"
+								size={20}
+								style={{ fill: "white" }}
+								onClick={() => {
+									setPostToBeDeletedId(p.id);
+									setDeletionModalIsOpen(true);
+								}}
+							/>
+						)
+					}
 
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
 						<Curtidas>
-							{userLikes[index] ?
-								<LikedIcon onClick={() => toggleLike(p.id, index)} /> :
-								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />}
-							<span>
-								{likeCount[index]} likes
-							</span>
+							{userLikes[index] ? (
+								<LikedIcon onClick={() => toggleLike(p.id, index)} />
+							) : (
+								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />
+							)}
+							<span>{likeCount[index]} likes</span>
 						</Curtidas>
 					</section>
 					<div>
@@ -127,7 +126,7 @@ export default function Post({ list }) {
 						</Snippet>
 					</div>
 				</PostStyle>
-			)}
+			))}
 		</>
 	);
 }

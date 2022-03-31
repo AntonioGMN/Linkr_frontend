@@ -15,6 +15,8 @@ export const DebounceInputStyleHeader = {
 };
 
 export const SearchStyleHeader = styled.section`
+	${(props) => (props.page ? DebounceInputStyleHeader : "8px")};
+
 	height: 45px;
 	width: 563px;
 	border: none;
