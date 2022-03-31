@@ -8,7 +8,6 @@ import CreatePostCard from "../../components/CreatePostCard";
 import Search from "../Search";
 import NewPostsBar from "../../components/newPosts";
 //import InfiniteScroll from "react-infinite-scroller";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
@@ -70,6 +69,7 @@ export default function Timeline() {
 				<MainStyle>
 					<Column id="haveScholl">
 						<CreatePostCard />
+						{/* <NewPostsBar /> */}
 						<Posts />
 					</Column>
 					<Trending />

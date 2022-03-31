@@ -30,13 +30,7 @@ export default function UserPosts() {
 		promiseUser.catch((err) => console.log(err.message));
 	}, [id]);
 
-	useEffect(() => {
-		const promisePosts = api.getPostsId(id, auth.token);
-		promisePosts.then((response) => setPosts(response.data));
-		promisePosts.catch(() => console.log(promisePosts));
-	}, [id]);
-
-	if (user !== null && posts !== null) {
+	if (user !== null) {
 		return (
 			<>
 				<Header />
@@ -47,15 +41,9 @@ export default function UserPosts() {
 						<Title text={user.name} />
 					</DivStyle>
 					<MainStyle>
-						{posts.length === 0 ? (
-							<PostsStyle>
-								<ErroMensagem>There are no posts yet</ErroMensagem>
-							</PostsStyle>
-						) : (
-							<Column id="haveScholl">
-								<Posts />
-							</Column>
-						)}
+						<Column id="haveScholl">
+							<Posts id={user.id} />
+						</Column>
 						<Trending />
 					</MainStyle>
 				</Container>

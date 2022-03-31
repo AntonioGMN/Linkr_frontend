@@ -6,7 +6,7 @@ import Post from "./Post";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 
-export default function Posts() {
+export default function Posts({ id }) {
 	const { auth } = useAuth();
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
@@ -16,11 +16,15 @@ export default function Posts() {
 	const [page, setpage] = useState(2);
 
 	function getposts() {
-		const promise = api.getPosts(auth.token);
-		promise.then((response) => {
-			setPosts(response.data);
-		});
-		promise.catch(() => setIsError(true));
+		if (id === undefined) {
+			const promise = api.getPostsPage(1, auth.token);
+			promise.then((response) => setPosts(response.data));
+			promise.catch(() => setIsError(true));
+		} else {
+			const promise = api.getPostsId(id, 1, auth.token);
+			promise.then((response) => setPosts(response.data));
+			promise.catch(() => setIsError(true));
+		}
 	}
 
 	useEffect(getposts, []);
@@ -42,22 +46,25 @@ export default function Posts() {
 	}
 
 	const fetchPosts = async () => {
-		const res = await api.getPostsPage(page, auth.token);
-		const data = await res.data;
-		return data;
+		if (id === undefined) {
+			const res = await api.getPostsPage(page, auth.token);
+			const data = await res.data;
+			return data;
+		} else {
+			const res = await api.getPostsId(id, page, auth.token);
+			const data = await res.data;
+			return data;
+		}
 	};
 
 	const fetchData = async () => {
-		const PostsFormServer = await fetchPosts();
-		console.log(PostsFormServer);
+		const newPosts = await fetchPosts();
 
-		setPosts([...posts, ...PostsFormServer]);
-		if (PostsFormServer.length === 0 || PostsFormServer.length < 20) {
+		setPosts([...posts, ...newPosts]);
+		if (newPosts.length === 0 || newPosts.length < 10) {
 			sethasMore(false);
 		}
 		setpage(page + 1);
-
-		console.log("toto");
 	};
 
 	if (posts !== null) {
@@ -69,7 +76,6 @@ export default function Posts() {
 			);
 		} else {
 			return (
-				// <div id="scrollableDiv" style={{ height: 300, overflow: "auto" }}>
 				<InfiniteScroll
 					scrollableTarget="haveScholl"
 					dataLength={posts.length} //This is important field to render the next data
@@ -85,7 +91,6 @@ export default function Posts() {
 						<Post list={posts} />{" "}
 					</PostsStyle>
 				</InfiniteScroll>
-				// </div>
 			);
 		}
 	}
