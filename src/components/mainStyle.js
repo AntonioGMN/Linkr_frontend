@@ -12,10 +12,7 @@ const Column = styled.div`
 	flex-direction: column;
 	max-height: 70vh;
 	overflow: auto;
-
-	@media (max-width: 600px) {
-		gap: 16px;
-	}
+	gap: 16px;
 `;
 
 export { MainStyle, Column };

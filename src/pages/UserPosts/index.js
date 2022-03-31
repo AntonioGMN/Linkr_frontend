@@ -10,6 +10,8 @@ import Container from "../../components/container";
 import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
 import Header from "../../components/Header";
+import { Column } from "../../components/mainStyle";
+import Posts from "../../components/Posts";
 
 import Title from "../Title";
 import Trending from "../trending";
@@ -36,37 +38,43 @@ export default function UserPosts() {
 
 	if (user !== null && posts !== null) {
 		return (
-			<Container>
+			<>
 				<Header />
-				<Search page="timeline"></Search>
-				<DivStyle>
-					<img src={user.pictureUrl}></img>
-					<Title text={user.name} />
-				</DivStyle>
-				<MainStyle>
-					<PostsStyle>
+				<Container>
+					<Search page="timeline"></Search>
+					<DivStyle>
+						<img src={user.pictureUrl}></img>
+						<Title text={user.name} />
+					</DivStyle>
+					<MainStyle>
 						{posts.length === 0 ? (
-							<ErroMensagem>There are no posts yet</ErroMensagem>
+							<PostsStyle>
+								<ErroMensagem>There are no posts yet</ErroMensagem>
+							</PostsStyle>
 						) : (
-							<Post list={posts} />
+							<Column id="haveScholl">
+								<Posts />
+							</Column>
 						)}
-					</PostsStyle>
-					<Trending />
-				</MainStyle>
-			</Container>
+						<Trending />
+					</MainStyle>
+				</Container>
+			</>
 		);
 	}
 
 	return (
-		<Container>
+		<>
 			<Header />
-			<Search page="timeline"></Search>
-			<MainStyle>
-				<PostsStyle>
-					<ErroMensagem>Loading</ErroMensagem>
-				</PostsStyle>
-				<Trending />
-			</MainStyle>
-		</Container>
+			<Container>
+				<Search page="timeline"></Search>
+				<MainStyle>
+					<PostsStyle>
+						<ErroMensagem>Loading</ErroMensagem>
+					</PostsStyle>
+					<Trending />
+				</MainStyle>
+			</Container>
+		</>
 	);
 }
