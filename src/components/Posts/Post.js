@@ -17,8 +17,8 @@ export default function Post({
 	}) {
 	const [editing, setEditing] = useState(false);
 	const [loading, setloading] = useState(false);
-	const [text, setText] = useState(postData.text);
 	const [data, setData] = useState(postData);
+	const [text, setText] = useState(data.text);
 	const inputFocus = useRef(null);
 
 	function handleClick() {
@@ -41,8 +41,8 @@ export default function Post({
 			setloading(true);
 
 			try {
-				const { newData } = await api.editPost(text, auth.token);
-				setData(newData);
+				const { data: newText } = await api.editPost(data.id, text, auth.token);
+				setData({ ...data, text: newText });
 			} catch (error) {
 				alert("Wasn't possible to update your post, please try again");
 			}

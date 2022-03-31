@@ -26,7 +26,7 @@ export const deletePost = async (id, token) =>
 	instance.delete(`/posts/${id}`, createAuth(token));
 
 export const editPost = async (id, newText, token) =>
-instance.patch(`/posts/${id}`, newText, createAuth(token));
+instance.patch(`/posts/${id}`, { newText },  createAuth(token));
 
 export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
 
