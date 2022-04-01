@@ -6,7 +6,7 @@ const baseURL =
     : "https://linkr390.herokuapp.com";
 
 const instance = axios.create({
-	baseURL,
+  baseURL,
 });
 
 function createAuth(token) {
@@ -23,23 +23,32 @@ const publish = async (post, token) =>
   instance.post("/posts", post, createAuth(token));
 
 export const deletePost = async (id, token) =>
-	instance.delete(`/posts/${id}`, createAuth(token));
+  instance.delete(`/posts/${id}`, createAuth(token));
 
-export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
+export const getPosts = async (token) =>
+  instance.get(`/posts`, createAuth(token));
 
 const getPostsByHashtag = async ({ hashtag, token }) =>
   instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
 
-const getPostsId = async (id, token) =>
-  instance.get(`/posts/${id}`, createAuth(token));
+const getPostsByUserId = async (id, token) =>
+  instance.get(`/posts/users/${id}`, createAuth(token));
 
-const getUserByName = async (name) => instance.get(`/users?name=${name}`);
+const getUserByName = async (name,token) => instance.get(`/users?name=${name}`, createAuth(token));
+
+const getUserById = async (id, token) => instance.get(`/users/${id}`, createAuth(token));
 
 const getTrending = async (token) =>
   instance.get("/hashtags/trending", createAuth(token));
 
 const toggleLikePost = async (id, token) =>
   instance.post(`/posts/${id}/toggle-like`, null, createAuth(token));
+
+const toggleFollow = async (id, token) =>
+  instance.put(`/users/${id}/follow`, null, createAuth(token));
+
+const getFollows = async (id, token) =>
+  instance.get(`/users/follows`, createAuth(token));
 
 const api = {
   signUp,
@@ -48,11 +57,14 @@ const api = {
   logout,
   deletePost,
   getPosts,
-  getPostsId,
+  getPostsByUserId,
   getUserByName,
   getTrending,
   getPostsByHashtag,
   toggleLikePost,
+  toggleFollow,
+  getFollows,
+  getUserById,
 };
 
 export default api;
