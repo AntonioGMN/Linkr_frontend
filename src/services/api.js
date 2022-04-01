@@ -25,8 +25,10 @@ const publish = async (post, token) =>
 export const deletePost = async (id, token) =>
   instance.delete(`/posts/${id}`, createAuth(token));
 
-export const getPosts = async (token) =>
-  instance.get(`/posts`, createAuth(token));
+export const editPost = async (id, newText, token) =>
+instance.patch(`/posts/${id}`, { newText },  createAuth(token));
+
+export const getPosts = async (token) => instance.get(`/posts`, createAuth(token));
 
 const getPostsByHashtag = async ({ hashtag, token }) =>
   instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
@@ -59,6 +61,7 @@ const api = {
   publish,
   logout,
   deletePost,
+  editPost,
   getPosts,
   getPostsByUserId,
   getUserByName,

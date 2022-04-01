@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
+import useTrending from "../../hooks/useTrending";
 import api from "../../services/api";
 
 export default function Trending() {
-  const [hashtags, setHashtags] = useState([]);
+  const { hashtags, setHashtags } = useTrending();
   const { auth } = useAuth();
   useEffect(() => {
     const promise = api.getTrending(auth.token);
@@ -15,7 +16,7 @@ export default function Trending() {
         console.log(err);
         alert("Error loading trending hashtags");
       });
-  }, [auth.token]);
+  }, [auth.token, hashtags]);
 
   return (
     <Container>

@@ -1,182 +1,144 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
-import PostModal from "../postsComponents/PostModal";
+import { useEffect, useState } from "react";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import { LikeAction, CommentAction, RepostAction } from "../postActions";
-import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
-import styled from "styled-components";
-import ReactHashtag from "@mdnm/react-hashtag";
 import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import useTrending from "../../hooks/useTrending";
+import ReactHashtag from "@mdnm/react-hashtag";
+import styled from "styled-components";
 
-export default function Post({ list }) {
-  const { auth } = useAuth();
+export default function Post({
+	postData,
+	auth,
+	setDeletionModalIsOpen,
+	setPostToBeDeletedId,
+	userLikes,
+	toggleLike,
+	setPostToBeSharedId,
+	likeCount, 
+	index,
+	setRepostModalIsOpen
+	}) {
+		
+	const { hashtags, setHashtags } = useTrending();
+	const [editing, setEditing] = useState(false);
+	const [loading, setloading] = useState(false);
+	const [data, setData] = useState(postData);
+	const [text, setText] = useState(data.text);
   const navigate = useNavigate();
+	const inputFocus = useRef(null);
 
-  const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
-  const [deletingPost, setDeletingPost] = useState(false);
-  const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+	function handleClick() {
+		if (!editing) {
+			setText(data.text);
+		}
+		setEditing(!editing);
+	}
 
-  const [repostModalIsOpen, setRepostModalIsOpen] = useState(false);
-  const [reposting, setReposting] = useState(false);
-  const [postToBeSharedId, setPostToBeSharedId] = useState(null);
+	function handleChange(e) {
+		setText(e.target.value);
+	}
 
-  function isLikedByUser(post) {
-    return post.likes.map((l) => l.userId).includes(auth.userId);
-  }
+	async function handleKeyDown(e) {
+		if (e.key === "Escape") {
+			return setEditing(false);
+		}
 
-  const [userLikes, setUserLikes] = useState(list.map(isLikedByUser));
+		if (e.key === "Enter") {
+			setloading(true);
 
-  const [likeCount, setLikeCount] = useState(list.map((p) => p.likes.length));
+			try {
+				const { data: newText } = await api.editPost(data.id, text, auth.token);
+				setData({ ...data, text: newText });
+			} catch (error) {
+				alert("Wasn't possible to update your post, please try again");
+			}
 
-  const [toggleLikeLock, setToggleLikeLock] = useState(false);
+			setloading(false);
+			return setEditing(false);
+		}
+	}
 
-  async function toggleLike(id, index) {
-    if (toggleLikeLock) return;
+	useEffect(() => {
+		inputFocus.current.focus();
+	}, [editing]);
 
-    setToggleLikeLock(true);
+	useEffect(() => {
+		setHashtags([...hashtags]);
+	}, [data]);
 
-    try {
-      await api.toggleLikePost(id, auth.token);
-
-      const newUserLikes = [...userLikes];
-      newUserLikes[index] = !userLikes[index];
-      setUserLikes(newUserLikes);
-
-      const newLikeCount = [...likeCount];
-      newLikeCount[index] = userLikes[index]
-        ? likeCount[index] - 1
-        : likeCount[index] + 1;
-      setLikeCount(newLikeCount);
-
-      setToggleLikeLock(false);
-    } catch (error) {
-      alert(error.response.data);
-      setToggleLikeLock(false);
-    }
-  }
-
-  async function repost(id) {
-    setReposting(true);
-
-    try {
-      await api.repost(id, auth.token);
-      setRepostModalIsOpen(false);
-      window.location.reload();
-      setReposting(false);
-    } catch (error) {
-      alert(error.response.data);
-      setRepostModalIsOpen(false);
-      setReposting(false);
-    }
-  }
-
-  async function deletePost(id) {
-    setDeletingPost(true);
-
-    try {
-      await api.deletePost(id, auth.token);
-      setDeletionModalIsOpen(false);
-      window.location.reload();
-      setDeletingPost(false);
-    } catch (error) {
-      alert(error.response.data);
-      setDeletionModalIsOpen(false);
-      setDeletingPost(false);
-    }
-  }
-
-  const postDeletionModalProps = {
-    modalIsOpen: deletionModalIsOpen,
-    setModalIsOpen: setDeletionModalIsOpen,
-    loading: deletingPost,
-    loadingText: "Deleting post...",
-    action: () => deletePost(postToBeDeletedId),
-    cancelText: "No, go back",
-    confirmText: "Yes, delete it",
-  };
-
-  const repostModalProps = {
-    modalIsOpen: repostModalIsOpen,
-    setModalIsOpen: setRepostModalIsOpen,
-    loading: reposting,
-    loadingText: "Re-posting...",
-    action: () => repost(postToBeSharedId),
-    cancelText: "No, cancel",
-    confirmText: "Yes, share!",
-  };
-
-  return (
-    <>
-      <PostModal {...postDeletionModalProps}>
-        Are you sure you want
-        <br /> to delete this post?
-      </PostModal>
-
-      <PostModal {...repostModalProps}>
-        Do you want to re-post
-        <br /> this link?
-      </PostModal>
-
-      {list.map((p, index) => (
-        <PostStyle key={index}>
-          {
-            // A user can only delete your own posts
-            p.authorId === auth.userId && (
-              <FaTrash
-                className="trash-icon"
-                size={20}
-                style={{ fill: "white" }}
-                onClick={() => {
-                  setPostToBeDeletedId(p.id);
-                  setDeletionModalIsOpen(true);
-                }}
-              />
-            )
-          }
-
-          <section>
-            <img src={p.pictureUrl} alt="erro" />
-            <LikeAction
-              isLiked={userLikes[index]}
-              count={likeCount[index]}
-              onClick={() => toggleLike(p.id, index)}
-            />
-            <CommentAction
-              onClick={() => alert("Not implemented yet!")}
-              count={index}
-            />
-            <RepostAction
-              count={parseInt(p.repostCount.count)}
-              onClick={() => {
-                setPostToBeSharedId(p.id);
-                setRepostModalIsOpen(true);
-              }}
-            />
-          </section>
-          <div>
-            <Link to={`/users/${p.authorId}`}>{p.name}</Link>
-            <Text>
-              <ReactHashtag
-                onHashtagClick={(val) => navigate("/hashtag/" + val.substr(1))}
-              >
-                {p.text}
-              </ReactHashtag>
-            </Text>
-            <Snippet href={p.link} target="_blank">
-              <div>
-                <p>{p.linkTitle}</p>
-                <span>{p.linkDescription}</span>
-                <p>{p.link}</p>
-              </div>
-              <img src={p.linkImage} alt="erro"></img>
-            </Snippet>
-          </div>
-        </PostStyle>
-      ))}
-    </>
-  );
+	return (
+		<PostStyle key={data.id} editing={editing}>
+			{
+				data.name === auth.userName && 
+				(<div className="icons">
+					<FaPencilAlt
+						className="edit-icon"
+						size={20}
+						style={{fill: 'white'}}
+						onClick={handleClick}
+					/>
+					<FaTrash
+						className="trash-icon"
+						size={20}
+						style={{fill: 'white'}}
+						onClick={() => {
+							setPostToBeDeletedId(data.id);
+							setDeletionModalIsOpen(true);
+						}}
+					/>
+				</div>)
+			}
+			<section>
+				<img src={data.pictureUrl} alt="erro" />
+				<LikeAction
+					isLiked={userLikes[index]}
+					count={likeCount[index]}
+					onClick={() => toggleLike(data.id, index)}
+				/>
+				<CommentAction
+					onClick={() => alert("Not implemented yet!")}
+					count={index}
+				/>
+				<RepostAction
+					count={parseInt(data.repostCount?.count)}
+					onClick={() => {
+						setPostToBeSharedId(data.id);
+						setRepostModalIsOpen(true);
+					}}
+				/>
+			</section>
+			<div>
+				<Link to={`/users/${data.authorId}`}>{data.name}</Link>
+				<textarea
+					style={{display: editing ? "flex" : "none"}}
+					value={text}
+					onChange={handleChange}
+					onKeyDown={handleKeyDown}
+					disabled={loading}
+					ref={inputFocus}
+				/>
+				<Text editing={editing}>
+					<ReactHashtag
+						onHashtagClick={(val) => navigate("/hashtag/" + val.substr(1))}
+					>
+						{data.text}
+					</ReactHashtag>
+				</Text>
+				<Snippet href={data.link} target="_blank">
+					<div>
+						<p>{data.linkTitle}</p>
+						<span>{data.linkDescription}</span>
+						<p>{data.link}</p>
+					</div>
+					<img src={data.linkImage} alt="erro"></img>
+				</Snippet>
+			</div>
+		</PostStyle>
+	)
 }
 
 const Text = styled.span`
@@ -186,6 +148,8 @@ const Text = styled.span`
   line-height: 20px;
 
   color: #b7b7b7;
+
+	display: ${({editing}) => editing ? "none" : "inline"};
 
   span {
     font-weight: bold;
