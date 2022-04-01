@@ -6,11 +6,13 @@ import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
-
-import { Link } from "react-router-dom";
+import styled from "styled-components";
+import ReactHashtag from "@mdnm/react-hashtag";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Post({ list }) {
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false);
@@ -155,7 +157,13 @@ export default function Post({ list }) {
           </section>
           <div>
             <Link to={`/users/${p.authorId}`}>{p.name}</Link>
-            <span>{p.text} </span>
+            <Text>
+              <ReactHashtag
+                onHashtagClick={(val) => navigate("/hashtag/" + val.substr(1))}
+              >
+                {p.text}
+              </ReactHashtag>
+            </Text>
             <Snippet href={p.link} target="_blank">
               <div>
                 <p>{p.linkTitle}</p>
@@ -170,3 +178,17 @@ export default function Post({ list }) {
     </>
   );
 }
+
+const Text = styled.span`
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 17px;
+  line-height: 20px;
+
+  color: #b7b7b7;
+
+  span {
+    font-weight: bold;
+    color: #fff;
+  }
+`;
