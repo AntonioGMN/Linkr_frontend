@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
 import Container from "../../components/container";
+import PostsStyle from "../../components/postsComponents/postsStyled";
+import ErroMensagem from "../../components/postsComponents/erroMensagem";
 import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
 import Header from "../../components/Header";
@@ -33,20 +35,40 @@ export default function UserPosts() {
       .catch(() => setIsError(true));
   }, [auth.token, id]);
 
-  return (
-    <Container>
-      <Header />
-      <DivStyle>
-            <img src={user.pictureUrl} alt="avatar"></img>
-            <Title text={`${user.name}'s posts`} />
-            <FollowButton userId={id} auth={auth} />
-      </DivStyle>
-      <MainStyle>
-        <Posts isError={isError} posts={posts} />
-        <div>
+	if (posts === null || posts.length === 0) {
+    return (
+      <Container>
+        <Header />
+        <DivStyle>
+          <img src={user.pictureUrl} alt="avatar"></img>
+          <Title text={`${user.name}’s posts`} />
+          <FollowButton userId={id} auth={auth} />
+        </DivStyle>
+        <MainStyle>
+          <PostsStyle>
+            <ErroMensagem>There are no posts yet</ErroMensagem>
+          </PostsStyle>
           <Trending />
-        </div>
-      </MainStyle>
-    </Container>
-  );
+        </MainStyle>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <Header />
+        <DivStyle>
+          <img src={user.pictureUrl} alt="avatar"></img>
+          <Title text={`${user.name}’s posts`} />
+          <FollowButton userId={id} auth={auth} />
+        </DivStyle>
+        <MainStyle>
+          <Posts isError={isError} posts={posts} />
+          <div>
+            <Trending />
+          </div>
+        </MainStyle>
+      </Container>
+    );
+  }
 }
+

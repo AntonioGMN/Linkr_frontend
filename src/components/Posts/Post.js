@@ -1,7 +1,7 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
-import PostDeletionModal from "../postsComponents/PostDeletionModal";
-import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
+import PostModal from "../postsComponents/PostModal";
+import { LikeAction, CommentAction, RepostAction } from "../postActions";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
@@ -15,6 +15,10 @@ export default function Post({ list }) {
   const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false);
   const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+
+  const [repostModalIsOpen, setRepostModalIsOpen] = useState(false);
+  const [reposting, setReposting] = useState(false);
+  const [postToBeSharedId, setPostToBeSharedId] = useState(null);
 
   function isLikedByUser(post) {
     return post.likes.map((l) => l.userId).includes(auth.userId);
@@ -51,6 +55,21 @@ export default function Post({ list }) {
     }
   }
 
+  async function repost(id) {
+    setReposting(true);
+
+    try {
+      await api.repost(id, auth.token);
+      setRepostModalIsOpen(false);
+      window.location.reload();
+      setReposting(false);
+    } catch (error) {
+      alert(error.response.data);
+      setRepostModalIsOpen(false);
+      setReposting(false);
+    }
+  }
+
   async function deletePost(id) {
     setDeletingPost(true);
 
@@ -67,41 +86,72 @@ export default function Post({ list }) {
   }
 
   const postDeletionModalProps = {
-    deletionModalIsOpen,
-    setDeletionModalIsOpen,
-    deletingPost,
-    postToBeDeletedId,
-    deletePost,
+    modalIsOpen: deletionModalIsOpen,
+    setModalIsOpen: setDeletionModalIsOpen,
+    loading: deletingPost,
+    loadingText: "Deleting post...",
+    action: () => deletePost(postToBeDeletedId),
+    cancelText: "No, go back",
+    confirmText: "Yes, delete it",
+  };
+
+  const repostModalProps = {
+    modalIsOpen: repostModalIsOpen,
+    setModalIsOpen: setRepostModalIsOpen,
+    loading: reposting,
+    loadingText: "Re-posting...",
+    action: () => repost(postToBeSharedId),
+    cancelText: "No, cancel",
+    confirmText: "Yes, share!",
   };
 
   return (
     <>
-      <PostDeletionModal {...postDeletionModalProps} />
+      <PostModal {...postDeletionModalProps}>
+        Are you sure you want
+        <br /> to delete this post?
+      </PostModal>
+
+      <PostModal {...repostModalProps}>
+        Do you want to re-post
+        <br /> this link?
+      </PostModal>
 
       {list.map((p, index) => (
-        <PostStyle key={p.id}>
-          {p.authorId === auth.userId && (
-            <FaTrash
-              className="trash-icon"
-              size={20}
-              style={{ fill: "white" }}
-              onClick={() => {
-                setPostToBeDeletedId(p.id);
-                setDeletionModalIsOpen(true);
-              }}
-            />
-          )}
+        <PostStyle key={index}>
+          {
+            // A user can only delete your own posts
+            p.authorId === auth.userId && (
+              <FaTrash
+                className="trash-icon"
+                size={20}
+                style={{ fill: "white" }}
+                onClick={() => {
+                  setPostToBeDeletedId(p.id);
+                  setDeletionModalIsOpen(true);
+                }}
+              />
+            )
+          }
 
           <section>
             <img src={p.pictureUrl} alt="erro" />
-            <Curtidas>
-              {userLikes[index] ? (
-                <LikedIcon onClick={() => toggleLike(p.id, index)} />
-              ) : (
-                <NotLikedIcon onClick={() => toggleLike(p.id, index)} />
-              )}
-              <span>{likeCount[index]} likes</span>
-            </Curtidas>
+            <LikeAction
+              isLiked={userLikes[index]}
+              count={likeCount[index]}
+              onClick={() => toggleLike(p.id, index)}
+            />
+            <CommentAction
+              onClick={() => alert("Not implemented yet!")}
+              count={index}
+            />
+            <RepostAction
+              count={parseInt(p.repostCount.count)}
+              onClick={() => {
+                setPostToBeSharedId(p.id);
+                setRepostModalIsOpen(true);
+              }}
+            />
           </section>
           <div>
             <Link to={`/users/${p.authorId}`}>{p.name}</Link>

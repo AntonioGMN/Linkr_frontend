@@ -34,7 +34,7 @@ const getPostsByHashtag = async ({ hashtag, token }) =>
 const getPostsByUserId = async (id, token) =>
   instance.get(`/posts/users/${id}`, createAuth(token));
 
-const getUserByName = async (name,token) => instance.get(`/users?name=${name}`, createAuth(token));
+const getUserByName = async (name, token) => instance.get(`/users?name=${name}`, createAuth(token));
 
 const getUserById = async (id, token) => instance.get(`/users/${id}`, createAuth(token));
 
@@ -44,6 +44,9 @@ const getTrending = async (token) =>
 const toggleLikePost = async (id, token) =>
   instance.post(`/posts/${id}/toggle-like`, null, createAuth(token));
 
+const repost = async (id, token) =>
+  instance.post(`posts/${id}/repost`, null, createAuth(token));
+  
 const toggleFollow = async (id, token) =>
   instance.put(`/users/${id}/follow`, null, createAuth(token));
 
@@ -62,6 +65,7 @@ const api = {
   getTrending,
   getPostsByHashtag,
   toggleLikePost,
+  repost,
   toggleFollow,
   getFollows,
   getUserById,
