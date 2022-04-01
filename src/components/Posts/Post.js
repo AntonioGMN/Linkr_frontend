@@ -91,6 +91,25 @@ export default function Post({
 					/>
 				</div>)
 			}
+			<section>
+				<img src={data.pictureUrl} alt="erro" />
+				<LikeAction
+					isLiked={userLikes[index]}
+					count={likeCount[index]}
+					onClick={() => toggleLike(data.id, index)}
+				/>
+				<CommentAction
+					onClick={() => alert("Not implemented yet!")}
+					count={index}
+				/>
+				<RepostAction
+					count={parseInt(data.repostCount?.count)}
+					onClick={() => {
+						setPostToBeSharedId(data.id);
+						setRepostModalIsOpen(true);
+					}}
+				/>
+			</section>
 			<div>
 				<Link to={`/users/${data.authorId}`}>{data.name}</Link>
 				<textarea
@@ -108,25 +127,6 @@ export default function Post({
 					})}
 				</span>
 				<Snippet href={data.link} target="_blank">
-					<section>
-						<img src={data.pictureUrl} alt="erro" />
-						<LikeAction
-							isLiked={userLikes[index]}
-							count={likeCount[index]}
-							onClick={() => toggleLike(data.id, index)}
-						/>
-						<CommentAction
-							onClick={() => alert("Not implemented yet!")}
-							count={index}
-						/>
-						<RepostAction
-							count={parseInt(data.repostCount?.count)}
-							onClick={() => {
-								setPostToBeSharedId(data.id);
-								setRepostModalIsOpen(true);
-							}}
-						/>
-					</section>
 					<div>
 						<p>{data.linkTitle}</p>
 						<span>{data.linkDescription}</span>
