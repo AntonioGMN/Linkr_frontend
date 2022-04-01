@@ -125,7 +125,7 @@ export default function Post({ list }) {
 			</PostModal>
 
 			{list.map((p, index) =>
-				<PostStyle key={p.id}>
+				<PostStyle key={index}>
 					{ // A user can only delete your own posts
 					p.authorId === auth.userId && 
 					(<FaTrash
