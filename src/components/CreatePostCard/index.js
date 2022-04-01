@@ -6,21 +6,21 @@ import api from "../../services/api";
 export default function CreatePostCard() {
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { auth } = useAuth();
   function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     api
       .publish({ text, link }, auth.token)
       .then(() => {
         window.location.reload();
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch(() => {
         alert("Houve um erro ao publicar seu link");
-        setLoading(false);
+        setIsLoading(false);
       });
   }
 
@@ -36,7 +36,7 @@ export default function CreatePostCard() {
           placeholder="http://..."
           value={link}
           onChange={(e) => setLink(e.target.value)}
-          disabled={loading}
+          disabled={isLoading}
           required
         />
         <textarea
@@ -44,11 +44,11 @@ export default function CreatePostCard() {
           placeholder="Awesome article about #javascript"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          disabled={loading}
+          disabled={isLoading}
         />
         <div>
-          <button loading={loading} type="submit" disabled={loading}>
-            {loading ? "Publishing..." : "Publish"}
+          <button isLoading={isLoading} type="submit" disabled={isLoading}>
+            {isLoading ? "Publishing..." : "Publish"}
           </button>
         </div>
       </Form>
@@ -137,8 +137,8 @@ const Form = styled.form`
     color: #ffffff;
     font-weight: bold;
     cursor: pointer;
-    opacity: ${({ loading }) => (loading ? 0.7 : 1)};
-    pointer-events: ${({ loading }) => (loading ? "none" : "all")};
+    opacity: ${({ isLoading }) => (isLoading ? 0.7 : 1)};
+    pointer-events: ${({ isLoading }) => (isLoading ? "none" : "all")};
     :hover {
       opacity: 0.8;
     }
