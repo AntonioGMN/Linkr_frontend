@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import { LikeAction, CommentAction, RepostAction } from "../postActions";
 import api from "../../services/api";
-
-import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import useTrending from "../../hooks/useTrending";
+import ReactHashtag from "@mdnm/react-hashtag";
+import styled from "styled-components";
 
 export default function Post({
 	postData,
@@ -28,6 +28,7 @@ export default function Post({
 	const [loading, setloading] = useState(false);
 	const [data, setData] = useState(postData);
 	const [text, setText] = useState(data.text);
+  const navigate = useNavigate();
 	const inputFocus = useRef(null);
 
 	function handleClick() {
@@ -120,12 +121,13 @@ export default function Post({
 					disabled={loading}
 					ref={inputFocus}
 				/>
-				<span style={{display: editing ? "none" : "inline"}}>
-					{data.text}{" "}
-					{data.hashtags?.map((h) => {
-						return <strong key={uuidv4()}>#{h} </strong>;
-					})}
-				</span>
+				<Text editing={editing}>
+					<ReactHashtag
+						onHashtagClick={(val) => navigate("/hashtag/" + val.substr(1))}
+					>
+						{data.text}
+					</ReactHashtag>
+				</Text>
 				<Snippet href={data.link} target="_blank">
 					<div>
 						<p>{data.linkTitle}</p>
@@ -138,3 +140,19 @@ export default function Post({
 		</PostStyle>
 	)
 }
+
+const Text = styled.span`
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 17px;
+  line-height: 20px;
+
+  color: #b7b7b7;
+
+	display: ${({editing}) => editing ? "none" : "inline"};
+
+  span {
+    font-weight: bold;
+    color: #fff;
+  }
+`;

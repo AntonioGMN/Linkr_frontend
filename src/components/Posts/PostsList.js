@@ -8,82 +8,77 @@ export default function PostsList({ list }) {
 	const { auth } = useAuth();
 
 	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
-	const [deletingPost, setDeletingPost] = useState(false);
-	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
+  const [deletingPost, setDeletingPost] = useState(false);
+  const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
 
-	const [repostModalIsOpen, setRepostModalIsOpen] = useState(false);
-	const [reposting, setReposting] = useState(false);
-	const [postToBeSharedId, setPostToBeSharedId] = useState(null);
+  const [repostModalIsOpen, setRepostModalIsOpen] = useState(false);
+  const [reposting, setReposting] = useState(false);
+  const [postToBeSharedId, setPostToBeSharedId] = useState(null);
 
-	async function deletePost(id) {
-		setDeletingPost(true);
+  function isLikedByUser(post) {
+    return post.likes.map((l) => l.userId).includes(auth.userId);
+  }
 
-		try {
-			await api.deletePost(id, auth.token);
-			setDeletionModalIsOpen(false);
-			window.location.reload();
-			setDeletingPost(false);
-		} catch (error) {
-			alert(error.response.data);
-			setDeletionModalIsOpen(false);
-			setDeletingPost(false);
-		}
-	}
+  const [userLikes, setUserLikes] = useState(list.map(isLikedByUser));
 
-	
-	function isLikedByUser(post) {
-		return post.likes.map(l => l.userId).includes(auth.userId);
-	}
+  const [likeCount, setLikeCount] = useState(list.map((p) => p.likes.length));
 
-	const [userLikes, setUserLikes] = useState(
-		list.map(isLikedByUser)
-	);
+  const [toggleLikeLock, setToggleLikeLock] = useState(false);
 
-	const [likeCount, setLikeCount] = useState(
-		list.map(p => p.likes.length)
-	);
+  async function toggleLike(id, index) {
+    if (toggleLikeLock) return;
 
-	const [toggleLikeLock, setToggleLikeLock] = useState(false);
+    setToggleLikeLock(true);
 
-	async function toggleLike(id, index) {
-		if(toggleLikeLock) return;
+    try {
+      await api.toggleLikePost(id, auth.token);
 
-		setToggleLikeLock(true);
+      const newUserLikes = [...userLikes];
+      newUserLikes[index] = !userLikes[index];
+      setUserLikes(newUserLikes);
 
-		try {
-			await api.toggleLikePost(id, auth.token);
-			
-			const newUserLikes = [...userLikes];
-			newUserLikes[index] = !userLikes[index];
-			setUserLikes(newUserLikes);
+      const newLikeCount = [...likeCount];
+      newLikeCount[index] = userLikes[index]
+        ? likeCount[index] - 1
+        : likeCount[index] + 1;
+      setLikeCount(newLikeCount);
 
-			const newLikeCount = [...likeCount];
-			newLikeCount[index] = userLikes[index] ?
-				likeCount[index] - 1 :
-				likeCount[index] + 1;
-			setLikeCount(newLikeCount);
+      setToggleLikeLock(false);
+    } catch (error) {
+      alert(error.response.data);
+      setToggleLikeLock(false);
+    }
+  }
 
-			setToggleLikeLock(false);
-		} catch (error) {
-			alert(error.response.data);
-			setToggleLikeLock(false);
-		}
-	}
+  async function repost(id) {
+    setReposting(true);
 
-	async function repost(id) {
-		setReposting(true);
+    try {
+      await api.repost(id, auth.token);
+      setRepostModalIsOpen(false);
+      window.location.reload();
+      setReposting(false);
+    } catch (error) {
+      alert(error.response.data);
+      setRepostModalIsOpen(false);
+      setReposting(false);
+    }
+  }
 
-		try {
-			await api.repost(id, auth.token);
-			setRepostModalIsOpen(false);
-			window.location.reload();
-			setReposting(false);
-		} catch (error) {
-			alert(error.response.data);
-			setRepostModalIsOpen(false);
-			setReposting(false);
-		}
-	}
+  async function deletePost(id) {
+    setDeletingPost(true);
+
+    try {
+      await api.deletePost(id, auth.token);
+      setDeletionModalIsOpen(false);
+      window.location.reload();
+      setDeletingPost(false);
+    } catch (error) {
+      alert(error.response.data);
+      setDeletionModalIsOpen(false);
+      setDeletingPost(false);
+    }
+  }
 
 	const postDeletionModalProps = {
 		modalIsOpen: deletionModalIsOpen,
