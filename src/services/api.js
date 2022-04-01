@@ -29,12 +29,14 @@ export const getPosts = async (token) =>
 	instance.get(`/posts`, createAuth(token));
 
 const getPostsPage = async (page, token) => {
-	console.log(`/posts?page=${page}&limit=${10}`);
 	return instance.get(`/posts?page=${page}&limit=${10}`, createAuth(token));
 };
 
-const getPostsByHashtag = async ({ hashtag, token }) =>
-	instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
+const getPostsByHashtag = async (hashtag, page, token) =>
+	instance.get(
+		`/hashtags/${hashtag}/posts?page=${page}&limit=${10}`,
+		createAuth(token)
+	);
 
 const getPostsId = async (id, page, token) =>
 	instance.get(`/posts/${id}?page=${page}&limit=${10}`, createAuth(token));

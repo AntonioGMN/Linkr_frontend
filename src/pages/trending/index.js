@@ -7,6 +7,7 @@ import api from "../../services/api";
 export default function Trending() {
 	const [hashtags, setHashtags] = useState([]);
 	const { auth } = useAuth();
+
 	useEffect(() => {
 		const promise = api.getTrending(auth.token);
 		promise
@@ -15,7 +16,7 @@ export default function Trending() {
 				console.log(err);
 				alert("Error loading trending hashtags");
 			});
-	}, [auth.token]);
+	}, [hashtags]);
 
 	return (
 		<Container>

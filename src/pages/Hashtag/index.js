@@ -5,34 +5,36 @@ import Header from "../../components/Header";
 import Title from "../Title";
 import Trending from "../trending";
 import Posts from "../../components/Posts";
-import Search from "../Search";
-import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import useAuth from "../../hooks/useAuth";
 
 export default function Hashtag() {
-  const [posts, setPosts] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const { auth } = useAuth();
-  const { hashtag } = useParams();
+	const [posts, setPosts] = useState([]);
+	const [isError, setIsError] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const { hashtag } = useParams();
+	const { auth } = useAuth();
 
-  useEffect(() => {
-    const promise = api.getPostsByHashtag({ hashtag, token: auth.token });
-    promise.then((response) => {
-      setPosts(response.data)});
-    promise.catch(() => setIsError(true));
-  }, [auth.token, hashtag]);
+	useEffect(() => {
+		const promise = api.getPostsByHashtag(hashtag, 1, auth.token);
+		promise.then((response) => {
+			setPosts(response.data);
+			setIsLoading(false);
+		});
+		promise.catch((err) => console.log(err.message));
+	}, [auth.token, hashtag]);
 
-  return (
-    <Container>
-      <Header />
-      <Title text={"#" + hashtag} />
-      <MainStyle>
-        <Column>
-          <Posts isError={isError} posts={posts} />
-        </Column>
-        <Trending />
-      </MainStyle>
-    </Container>
-  );
+	return (
+		<Container>
+			<Header />
+			<Title text={"#" + hashtag} />
+			<MainStyle>
+				<Column>
+					{isLoading ? <div>Loading</div> : <Posts hashtage={posts} />}
+				</Column>
+				<Trending />
+			</MainStyle>
+		</Container>
+	);
 }

@@ -6,7 +6,7 @@ import Post from "./Post";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 
-export default function Posts({ id }) {
+export default function Posts({ id, hashtage }) {
 	const { auth } = useAuth();
 	const [posts, setPosts] = useState(null);
 	const [isError, setIsError] = useState(false);
@@ -16,13 +16,16 @@ export default function Posts({ id }) {
 	const [page, setpage] = useState(2);
 
 	function getposts() {
-		if (id === undefined) {
-			const promise = api.getPostsPage(1, auth.token);
-			promise.then((response) => setPosts(response.data));
-			promise.catch(() => setIsError(true));
-		} else {
+		if (id !== undefined) {
 			const promise = api.getPostsId(id, 1, auth.token);
 			promise.then((response) => setPosts(response.data));
+			promise.catch(() => setIsError(true));
+		} else if (hashtage !== undefined) setPosts(hashtage);
+		else {
+			const promise = api.getPostsPage(1, auth.token);
+			promise.then((response) => {
+				setPosts(response.data);
+			});
 			promise.catch(() => setIsError(true));
 		}
 	}
@@ -46,12 +49,16 @@ export default function Posts({ id }) {
 	}
 
 	const fetchPosts = async () => {
-		if (id === undefined) {
-			const res = await api.getPostsPage(page, auth.token);
+		if (id != undefined) {
+			const res = await api.getPostsId(id, page, auth.token);
+			const data = await res.data;
+			return data;
+		} else if (hashtage != undefined) {
+			const res = api.getPostsByHashtag(hashtage[0].text, page, auth.token);
 			const data = await res.data;
 			return data;
 		} else {
-			const res = await api.getPostsId(id, page, auth.token);
+			const res = await api.getPostsPage(page, auth.token);
 			const data = await res.data;
 			return data;
 		}

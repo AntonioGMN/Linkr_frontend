@@ -5,7 +5,6 @@ import useAuth from "../../hooks/useAuth";
 import PostsStyle from "../../components/postsComponents/postsStyled";
 import ErroMensagem from "../../components/postsComponents/erroMensagem";
 import api from "../../services/api";
-import Post from "../../components/Posts/Post";
 import Container from "../../components/container";
 import { MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
@@ -28,7 +27,15 @@ export default function UserPosts() {
 		const promiseUser = api.getUserById(id, auth.token);
 		promiseUser.then((response) => setUser(response.data));
 		promiseUser.catch((err) => console.log(err.message));
-	}, [id]);
+	}, []);
+
+	useEffect(() => {
+		const promisePosts = api.getPostsId(id, 1, auth.token);
+		promisePosts.then((response) => setPosts(response.data));
+		promisePosts.catch((err) => console.log(err.message));
+	}, []);
+
+	console.log(posts);
 
 	if (user !== null) {
 		return (
@@ -38,7 +45,7 @@ export default function UserPosts() {
 					<Search page="timeline"></Search>
 					<DivStyle>
 						<img src={user.pictureUrl}></img>
-						<Title text={user.name} />
+						<Title text={`${user.name}` + "’s posts"} />
 					</DivStyle>
 					<MainStyle>
 						<Column id="haveScholl">
