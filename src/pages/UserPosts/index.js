@@ -17,30 +17,29 @@ export default function UserPosts() {
 
   const [posts, setPosts] = useState(null);
   const [isError, setIsError] = useState(false);
+  const [user, setUser] = useState({
+    pictureUrl: "https://http.cat/404",
+    name: "Anon",
+  });
   const { id } = useParams();
 
   useEffect(() => {
-    const promise = api.getPostsId(id, auth.token);
-    promise.then((response) => setPosts(response.data));
-    promise.catch(() => setIsError(true));
-  }, []);
+    api.getUserById(id,auth.token).then((res) => {
+      setUser(res.data);
+    })
+    api
+      .getPostsByUserId(id, auth.token)
+      .then((response) => setPosts(response.data))
+      .catch(() => setIsError(true));
+  }, [auth.token, id]);
 
   return (
     <Container>
       <Header />
       <DivStyle>
-        {!posts ? (
-          <>
-            <img src={"https://http.cat/404"} alt="avatar"></img>
-            <Title text={`anon's posts`} />
-          </>
-        ) : (
-          <>
-            <img src={posts[0]?.pictureUrl} alt="avatar"></img>
-            <Title text={`${posts[0]?.name}'s posts`} />
-            <FollowButton userId={id} auth={auth}/>
-          </>
-        )}
+            <img src={user.pictureUrl} alt="avatar"></img>
+            <Title text={`${user.name}'s posts`} />
+            <FollowButton userId={id} auth={auth} />
       </DivStyle>
       <MainStyle>
         <Posts isError={isError} posts={posts} />

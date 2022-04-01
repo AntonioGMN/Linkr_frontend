@@ -31,10 +31,12 @@ export const getPosts = async (token) =>
 const getPostsByHashtag = async ({ hashtag, token }) =>
   instance.get(`/hashtags/${hashtag}/posts`, createAuth(token));
 
-const getPostsId = async (id, token) =>
-  instance.get(`/posts/${id}`, createAuth(token));
+const getPostsByUserId = async (id, token) =>
+  instance.get(`/posts/users/${id}`, createAuth(token));
 
-const getUserByName = async (name) => instance.get(`/users?name=${name}`);
+const getUserByName = async (name,token) => instance.get(`/users?name=${name}`, createAuth(token));
+
+const getUserById = async (id, token) => instance.get(`/users/${id}`, createAuth(token));
 
 const getTrending = async (token) =>
   instance.get("/hashtags/trending", createAuth(token));
@@ -55,13 +57,14 @@ const api = {
   logout,
   deletePost,
   getPosts,
-  getPostsId,
+  getPostsByUserId,
   getUserByName,
   getTrending,
   getPostsByHashtag,
   toggleLikePost,
   toggleFollow,
   getFollows,
+  getUserById,
 };
 
 export default api;
