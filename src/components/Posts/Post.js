@@ -1,9 +1,7 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
 import PostModal from "../postsComponents/PostModal";
-import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
-import Comments, { CommentIcon } from "../comments";
-import Reposts, { RepostIcon } from "../reposts";
+import { LikeAction, CommentAction, RepostAction } from "../postActions";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
@@ -140,29 +138,22 @@ export default function Post({ list }) {
 
 					<section>
 						<img src={p.pictureUrl} alt="erro" />
-						<Curtidas>
-							{userLikes[index] ?
-								<LikedIcon onClick={() => toggleLike(p.id, index)} /> :
-								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />}
-							<span>
-								{likeCount[index]} likes
-							</span>
-						</Curtidas>
-						<Comments>
-							<CommentIcon />
-							<span>
-								{index} comments
-							</span>
-						</Comments>
-						<Reposts>
-							<RepostIcon onClick={() => {
-							setPostToBeSharedId(p.id);
-							setRepostModalIsOpen(true);
-						}} />
-							<span>
-								{parseInt(p.repostCount.count)} re-posts
-							</span>
-						</Reposts>
+						<LikeAction
+							isLiked={userLikes[index]}
+							count={likeCount[index]}
+							onClick={() => toggleLike(p.id, index)}
+						/>
+						<CommentAction
+							onClick={() => alert("Not implemented yet!")}
+							count={index}
+						/>
+						<RepostAction
+							count={parseInt(p.repostCount.count)}
+							onClick={() => {
+								setPostToBeSharedId(p.id);
+								setRepostModalIsOpen(true);
+							}}
+						/>
 					</section>
 					<div>
 						<Link to={`/users/${p.authorId}`}>{p.name}</Link>
