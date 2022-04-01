@@ -1,45 +1,42 @@
 import { useState } from "react";
 import styled from "styled-components";
-import useAuth from "../../../hooks/useAuth";
-import api from "../../../services/api";
+import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
 
 export default function CreatePostCard() {
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { auth } = useAuth();
   function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     api
       .publish({ text, link }, auth.token)
       .then(() => {
         window.location.reload();
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch(() => {
         alert("Houve um erro ao publicar seu link");
-        setLoading(false);
+        setIsLoading(false);
       });
   }
 
   return (
     <Container>
       <div>
-        <Avatar
-          src={auth.userPicture}
-          alt="avatar"
-        />
+        <Avatar src={auth.userPicture} alt="avatar" />
       </div>
       <Form onSubmit={handleSubmit}>
-        <span>What are you gonig to share today?</span>
+        <span>What are you going to share today?</span>
         <input
           type="url"
           placeholder="http://..."
           value={link}
           onChange={(e) => setLink(e.target.value)}
-          disabled={loading}
+          disabled={isLoading}
           required
         />
         <textarea
@@ -47,11 +44,11 @@ export default function CreatePostCard() {
           placeholder="Awesome article about #javascript"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          disabled={loading}
+          disabled={isLoading}
         />
         <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Publishing..." : "Publish"}
+          <button isLoading={isLoading} type="submit" disabled={isLoading}>
+            {isLoading ? "Publishing..." : "Publish"}
           </button>
         </div>
       </Form>
@@ -70,9 +67,9 @@ const Container = styled.div`
   padding: 16px;
   display: flex;
   gap: 16px;
-
-  @media (max-width: 600px) {
-    width: 100%;
+  margin-bottom: 16px;
+  @media (max-width: 800px) {
+    width: 100vw;
     height: 200px;
     border-radius: 0;
   }
@@ -84,10 +81,11 @@ const Avatar = styled.img`
   border-radius: 26.5px;
   object-fit: cover;
 
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -139,8 +137,8 @@ const Form = styled.form`
     color: #ffffff;
     font-weight: bold;
     cursor: pointer;
-    opacity: ${({ loading }) => (loading ? 0.7 : 1)};
-    pointer-events: ${({ loading }) => (loading ? "none" : "all")};
+    opacity: ${({ isLoading }) => (isLoading ? 0.7 : 1)};
+    pointer-events: ${({ isLoading }) => (isLoading ? "none" : "all")};
     :hover {
       opacity: 0.8;
     }
@@ -149,7 +147,7 @@ const Form = styled.form`
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     justify-content: center;
     align-items: center;
     width: 100%;

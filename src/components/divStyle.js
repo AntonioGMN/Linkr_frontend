@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const DivStyle = styled.div`
 	height: 64px;
-	width: 423px;
+	width: 100%;
 	margin-bottom: 41px;
-
+	margin-top: 41px;
 	border-radius: nullpx;
 
 	display: flex;
@@ -13,6 +13,10 @@ const DivStyle = styled.div`
 
 	h1 {
 		margin: 0 0 0 20px;
+	}
+
+	img {
+		object-fit: cover;
 	}
 `;
 
