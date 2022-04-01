@@ -16,10 +16,12 @@ export function LikedIcon({ onClick }) {
 }
 
 export default function LikeAction({ onClick, count, isLiked }) {
-  <StyledAction>
-    {isLiked ?
-      <LikedIcon onClick={onClick} /> :
-      <NotLikedIcon onClick={onClick} />}
-    <span>{count} likes</span>
-  </StyledAction>
+  return (
+    <StyledAction>
+      {isLiked ?
+        <LikedIcon onClick={onClick} /> :
+        <NotLikedIcon onClick={onClick} />}
+      <span>{count} likes</span>
+    </StyledAction>
+  );
 }
