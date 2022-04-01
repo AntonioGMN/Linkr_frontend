@@ -4,130 +4,119 @@ import PostDeletionModal from "../postsComponents/PostDeletionModal";
 import Curtidas, { LikedIcon, NotLikedIcon } from "../curtidas";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import ReactTooltip from "react-tooltip";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
 
 import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 export default function Post({ list }) {
-	const { auth } = useAuth();
+  const { auth } = useAuth();
 
-	const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
-	const [deletingPost, setDeletingPost] = useState(false);
-	const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
-	
-	function isLikedByUser(post) {
-		return post.likes.map(l => l.userId).includes(auth.userId);
-	}
+  const [deletionModalIsOpen, setDeletionModalIsOpen] = useState(false);
+  const [deletingPost, setDeletingPost] = useState(false);
+  const [postToBeDeletedId, setPostToBeDeletedId] = useState(null);
 
-	const [userLikes, setUserLikes] = useState(
-		list.map(isLikedByUser)
-	);
+  function isLikedByUser(post) {
+    return post.likes.map((l) => l.userId).includes(auth.userId);
+  }
 
-	const [likeCount, setLikeCount] = useState(
-		list.map(p => p.likes.length)
-	);
+  const [userLikes, setUserLikes] = useState(list.map(isLikedByUser));
 
-	const [toggleLikeLock, setToggleLikeLock] = useState(false);
+  const [likeCount, setLikeCount] = useState(list.map((p) => p.likes.length));
 
-	async function toggleLike(id, index) {
-		if(toggleLikeLock) return;
+  const [toggleLikeLock, setToggleLikeLock] = useState(false);
 
-		setToggleLikeLock(true);
+  async function toggleLike(id, index) {
+    if (toggleLikeLock) return;
 
-		try {
-			await api.toggleLikePost(id, auth.token);
-			
-			const newUserLikes = [...userLikes];
-			newUserLikes[index] = !userLikes[index];
-			setUserLikes(newUserLikes);
+    setToggleLikeLock(true);
 
-			const newLikeCount = [...likeCount];
-			newLikeCount[index] = userLikes[index] ?
-				likeCount[index] - 1 :
-				likeCount[index] + 1;
-			setLikeCount(newLikeCount);
+    try {
+      await api.toggleLikePost(id, auth.token);
 
-			setToggleLikeLock(false);
-		} catch (error) {
-			alert(error.response.data);
-			setToggleLikeLock(false);
-		}
-	}
+      const newUserLikes = [...userLikes];
+      newUserLikes[index] = !userLikes[index];
+      setUserLikes(newUserLikes);
 
-	async function deletePost(id) {
-		setDeletingPost(true);
+      const newLikeCount = [...likeCount];
+      newLikeCount[index] = userLikes[index]
+        ? likeCount[index] - 1
+        : likeCount[index] + 1;
+      setLikeCount(newLikeCount);
 
-		try {
-			await api.deletePost(id, auth.token);
-			setDeletionModalIsOpen(false);
-			window.location.reload();
-			setDeletingPost(false);
-		} catch (error) {
-			alert(error.response.data);
-			setDeletionModalIsOpen(false);
-			setDeletingPost(false);
-		}
-	}
+      setToggleLikeLock(false);
+    } catch (error) {
+      alert(error.response.data);
+      setToggleLikeLock(false);
+    }
+  }
 
-	const postDeletionModalProps = {
-		deletionModalIsOpen,
-		setDeletionModalIsOpen,
-		deletingPost,
-		postToBeDeletedId,
-		deletePost,
-	}
+  async function deletePost(id) {
+    setDeletingPost(true);
 
-	return (
-		<>
-			<PostDeletionModal {... postDeletionModalProps} />
+    try {
+      await api.deletePost(id, auth.token);
+      setDeletionModalIsOpen(false);
+      window.location.reload();
+      setDeletingPost(false);
+    } catch (error) {
+      alert(error.response.data);
+      setDeletionModalIsOpen(false);
+      setDeletingPost(false);
+    }
+  }
 
-			{list.map((p, index) =>
-				<PostStyle key={p.id}>
-					{ // A user can only delete your own posts
-					p.authorId === auth.userId && 
-					(<FaTrash
-						className="trash-icon"
-						size={20}
-						style={{fill: 'white'}}
-						onClick={() => {
-							setPostToBeDeletedId(p.id);
-							setDeletionModalIsOpen(true);
-						}}
-					/>)}
+  const postDeletionModalProps = {
+    deletionModalIsOpen,
+    setDeletionModalIsOpen,
+    deletingPost,
+    postToBeDeletedId,
+    deletePost,
+  };
 
-					<section>
-						<img src={p.pictureUrl} alt="erro" />
-						<Curtidas>
-							{userLikes[index] ?
-								<LikedIcon onClick={() => toggleLike(p.id, index)} /> :
-								<NotLikedIcon onClick={() => toggleLike(p.id, index)} />}
-							<span>
-								{likeCount[index]} likes
-							</span>
-						</Curtidas>
-					</section>
-					<div>
-						<Link to={`/users/${p.authorId}`}>{p.name}</Link>
-						<span>
-							{p.text}{" "}
-							{p.hashtags.map((h) => {
-								return <strong key={uuidv4()}>#{h} </strong>;
-							})}
-						</span>
-						<Snippet href={p.link} target="_blank">
-							<div>
-								<p>{p.linkTitle}</p>
-								<span>{p.linkDescription}</span>
-								<p>{p.link}</p>
-							</div>
-							<img src={p.linkImage} alt="erro"></img>
-						</Snippet>
-					</div>
-				</PostStyle>
-			)}
-		</>
-	);
+  return (
+    <>
+      <PostDeletionModal {...postDeletionModalProps} />
+
+      {list.map((p, index) => (
+        <PostStyle key={p.id}>
+          {p.authorId === auth.userId && (
+            <FaTrash
+              className="trash-icon"
+              size={20}
+              style={{ fill: "white" }}
+              onClick={() => {
+                setPostToBeDeletedId(p.id);
+                setDeletionModalIsOpen(true);
+              }}
+            />
+          )}
+
+          <section>
+            <img src={p.pictureUrl} alt="erro" />
+            <Curtidas>
+              {userLikes[index] ? (
+                <LikedIcon onClick={() => toggleLike(p.id, index)} />
+              ) : (
+                <NotLikedIcon onClick={() => toggleLike(p.id, index)} />
+              )}
+              <span>{likeCount[index]} likes</span>
+            </Curtidas>
+          </section>
+          <div>
+            <Link to={`/users/${p.authorId}`}>{p.name}</Link>
+            <span>{p.text} </span>
+            <Snippet href={p.link} target="_blank">
+              <div>
+                <p>{p.linkTitle}</p>
+                <span>{p.linkDescription}</span>
+                <p>{p.link}</p>
+              </div>
+              <img src={p.linkImage} alt="erro"></img>
+            </Snippet>
+          </div>
+        </PostStyle>
+      ))}
+    </>
+  );
 }
