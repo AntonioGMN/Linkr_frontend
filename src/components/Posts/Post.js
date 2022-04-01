@@ -159,9 +159,6 @@ export default function Post({ list }) {
 						<Link to={`/users/${p.authorId}`}>{p.name}</Link>
 						<span>
 							{p.text}{" "}
-							{p.hashtags.map((h) => {
-								return <strong key={uuidv4()}>#{h} </strong>;
-							})}
 						</span>
 						<Snippet href={p.link} target="_blank">
 							<div>
