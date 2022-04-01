@@ -27,15 +27,13 @@ export default function UserPosts() {
 		const promiseUser = api.getUserById(id, auth.token);
 		promiseUser.then((response) => setUser(response.data));
 		promiseUser.catch((err) => console.log(err.message));
-	}, []);
+	}, [auth.token]);
 
 	useEffect(() => {
 		const promisePosts = api.getPostsId(id, 1, auth.token);
 		promisePosts.then((response) => setPosts(response.data));
 		promisePosts.catch((err) => console.log(err.message));
-	}, []);
-
-	console.log(posts);
+	}, [auth.token]);
 
 	if (user !== null) {
 		return (

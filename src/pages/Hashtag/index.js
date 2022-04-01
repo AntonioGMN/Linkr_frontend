@@ -23,7 +23,9 @@ export default function Hashtag() {
 			setIsLoading(false);
 		});
 		promise.catch((err) => console.log(err.message));
-	}, [auth.token, hashtag]);
+	}, [hashtag]);
+
+	console.log(hashtag);
 
 	return (
 		<Container>
