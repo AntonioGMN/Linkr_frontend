@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
 import api from "../../services/api";
+import useTrending from "../../hooks/useTrending";
 
 export default function Post({
 	postData,
@@ -15,6 +16,8 @@ export default function Post({
 	setDeletionModalIsOpen,
 	setPostToBeDeletedId,
 	}) {
+		
+	const { hashtags, setHashtags } = useTrending();
 	const [editing, setEditing] = useState(false);
 	const [loading, setloading] = useState(false);
 	const [data, setData] = useState(postData);
@@ -52,11 +55,13 @@ export default function Post({
 		}
 	}
 
-
-
 	useEffect(() => {
 		inputFocus.current.focus();
-	}, [editing, data]);
+	}, [editing]);
+
+	useEffect(() => {
+		setHashtags([...hashtags]);
+	}, [data]);
 
 	return (
 		<PostStyle key={data.id} editing={editing}>
