@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
-const Curtidas = styled.div`
+const StyledAction = styled.div`
 	width: 50px;
 
 	display: flex;
 	flex-direction: column;
 
+	.icon {
+		align-self: center;
+	}
+
 	span {
+		align-self: center;
+
 		font-size: 11px;
 		font-weight: 400;
 		line-height: 13px;
@@ -25,4 +31,4 @@ const Curtidas = styled.div`
 	}
 `;
 
-export default Curtidas;
+export default StyledAction;

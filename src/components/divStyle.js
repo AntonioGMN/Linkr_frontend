@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const DivStyle = styled.div`
 	height: 64px;
-	width: 423px;
+	width: 100%;
 	margin-bottom: 41px;
-
+	margin-top: 41px;
 	border-radius: nullpx;
 
 	display: flex;

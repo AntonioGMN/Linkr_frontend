@@ -1,13 +1,13 @@
 import PostStyle from "../postsComponents/postStyled";
 import Snippet from "../postsComponents/snippet";
-import Curtidas from "../curtidas";
 import { useEffect, useState } from "react";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
-import { AiOutlineHeart as CurtidaIcon } from "react-icons/ai";
+import { LikeAction, CommentAction, RepostAction } from "../postActions";
+import api from "../../services/api";
+
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
-import api from "../../services/api";
 import useTrending from "../../hooks/useTrending";
 
 export default function Post({
@@ -15,6 +15,12 @@ export default function Post({
 	auth,
 	setDeletionModalIsOpen,
 	setPostToBeDeletedId,
+	userLikes,
+	toggleLike,
+	setPostToBeSharedId,
+	likeCount, 
+	index,
+	setRepostModalIsOpen
 	}) {
 		
 	const { hashtags, setHashtags } = useTrending();
@@ -85,16 +91,6 @@ export default function Post({
 					/>
 				</div>)
 			}
-
-			<section>
-				<img src={data.pictureUrl} alt="erro" />
-				<Curtidas>
-					<span>
-						<CurtidaIcon size={30} style={{fill: "white"}} />
-						Curtidas
-					</span>
-				</Curtidas>
-			</section>
 			<div>
 				<Link to={`/users/${data.authorId}`}>{data.name}</Link>
 				<textarea
@@ -112,6 +108,25 @@ export default function Post({
 					})}
 				</span>
 				<Snippet href={data.link} target="_blank">
+					<section>
+						<img src={data.pictureUrl} alt="erro" />
+						<LikeAction
+							isLiked={userLikes[index]}
+							count={likeCount[index]}
+							onClick={() => toggleLike(data.id, index)}
+						/>
+						<CommentAction
+							onClick={() => alert("Not implemented yet!")}
+							count={index}
+						/>
+						<RepostAction
+							count={parseInt(data.repostCount?.count)}
+							onClick={() => {
+								setPostToBeSharedId(data.id);
+								setRepostModalIsOpen(true);
+							}}
+						/>
+					</section>
 					<div>
 						<p>{data.linkTitle}</p>
 						<span>{data.linkDescription}</span>

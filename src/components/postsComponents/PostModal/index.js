@@ -1,15 +1,16 @@
-import { useState } from "react";
-
 import Modal from "react-modal";
 
 import { ModalText, ModalButtonsDiv, ModalButton } from "./styles";
 
-export default function PostDeletionModal({
-  deletionModalIsOpen,
-  setDeletionModalIsOpen,
-  deletingPost,
-  postToBeDeletedId,
-  deletePost,
+export default function PostModal({
+  children,
+  modalIsOpen,
+  setModalIsOpen,
+  loading,
+  loadingText,
+  action,
+  cancelText,
+  confirmText,
 }) {
 
   const customStyles = {
@@ -38,18 +39,17 @@ export default function PostDeletionModal({
   Modal.setAppElement(".root");
 
   return (
-    <Modal isOpen={deletionModalIsOpen} style={customStyles}>
-      {deletingPost ? <ModalText>Deleting post...</ModalText> :
+    <Modal isOpen={modalIsOpen} style={customStyles}>
+      {loading ? <ModalText>{loadingText}</ModalText> :
       (<>
         <ModalText>
-          Are you sure you want
-          <br /> to delete this post?
+          {children}
         </ModalText>
         <ModalButtonsDiv>
-          <ModalButton cancel onClick={() => setDeletionModalIsOpen(false)}>
-            No, go back
+          <ModalButton cancel onClick={() => setModalIsOpen(false)}>
+            {cancelText}
           </ModalButton>
-          <ModalButton onClick={() => deletePost(postToBeDeletedId)}>Yes, delete it</ModalButton>
+          <ModalButton onClick={action}>{confirmText}</ModalButton>
         </ModalButtonsDiv>
       </>)}
     </Modal>

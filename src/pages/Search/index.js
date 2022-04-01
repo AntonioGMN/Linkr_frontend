@@ -17,18 +17,20 @@ export default function Search({ page }) {
 	const [showUsers, setShowUsers] = useState(false);
 	const { auth } = useAuth();
 
-	function getUsers() {
+	function getUsers(name) {
 		const promise = api.getUserByName(name, auth.token);
 		promise.then((response) => {
-			console.log(response.data);
 			setUsers(response.data);
-		});
 
-		if (users.length === 0 || name.length === 0) setShowUsers(false);
-		else {
-			setUsers([]);
-			setShowUsers(true);
-		}
+			if (name.length === 0) {
+				setShowUsers(false)
+			} 
+			else {
+				setShowUsers(true);
+			}
+		}).catch((error) => {
+			setShowUsers(false);
+		});
 	}
 
 	if (page === "header") {
@@ -41,10 +43,7 @@ export default function Search({ page }) {
 					placeholder={"Search for people"}
 					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
-						getUsers();
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
@@ -67,16 +66,13 @@ export default function Search({ page }) {
 		return (
 			<SearchStyleTimeline visibiliti={showUsers}>
 				<DebounceInput
-					minLength={2}
+					minLength={3}
 					debounceTimeout={300}
 					style={DebounceInputStyleTimeline}
 					placeholder={"Search for people and friends"}
 					value={name}
 					onChange={(e) => {
-						setName(e.target.value);
-						console.log(e);
-						console.log(e.target.value);
-						getUsers();
+						getUsers(e.target.value);
 					}}
 				/>
 				<ShowUsersStyle visibiliti={showUsers}>
