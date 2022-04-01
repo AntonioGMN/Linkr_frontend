@@ -35,41 +35,40 @@ export default function UserPosts() {
       .catch(() => setIsError(true));
   }, [auth.token, id]);
 
-	if (posts !== null) {
-		if (posts.length === 0) {
-			return (
-				<Container>
-					<Header />
-          <DivStyle>
-            <img src={user.pictureUrl} alt="avatar"></img>
-            <Title text={`${user.name}’s posts`} />
-            <FollowButton userId={id} auth={auth} />
-          </DivStyle>
-					<MainStyle>
-						<PostsStyle>
-							<ErroMensagem>There are no posts yet</ErroMensagem>
-						</PostsStyle>
-						<Trending />
-					</MainStyle>
-				</Container>
-			);
-		} else {
-			return (
-				<Container>
-					<Header />
-					<DivStyle>
-            <img src={user.pictureUrl} alt="avatar"></img>
-            <Title text={`${user.name}’s posts`} />
-            <FollowButton userId={id} auth={auth} />
-      </DivStyle>
-					<MainStyle>
-            <Posts isError={isError} posts={posts} />
-            <div>
-              <Trending />
-            </div>
-					</MainStyle>
-				</Container>
-			);
-		}
-	}
+	if (posts === null || posts.length === 0) {
+    return (
+      <Container>
+        <Header />
+        <DivStyle>
+          <img src={user.pictureUrl} alt="avatar"></img>
+          <Title text={`${user.name}’s posts`} />
+          <FollowButton userId={id} auth={auth} />
+        </DivStyle>
+        <MainStyle>
+          <PostsStyle>
+            <ErroMensagem>There are no posts yet</ErroMensagem>
+          </PostsStyle>
+          <Trending />
+        </MainStyle>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <Header />
+        <DivStyle>
+          <img src={user.pictureUrl} alt="avatar"></img>
+          <Title text={`${user.name}’s posts`} />
+          <FollowButton userId={id} auth={auth} />
+        </DivStyle>
+        <MainStyle>
+          <Posts isError={isError} posts={posts} />
+          <div>
+            <Trending />
+          </div>
+        </MainStyle>
+      </Container>
+    );
+  }
 }
+
