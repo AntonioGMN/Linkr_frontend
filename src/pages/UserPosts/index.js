@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
-import PostsList from "../../components/Posts/PostsList";
 import Container from "../../components/container";
 import PostsStyle from "../../components/postsComponents/postsStyled";
 import ErroMensagem from "../../components/postsComponents/erroMensagem";
-import { MainStyle } from "../../components/mainStyle";
+import { Column, MainStyle } from "../../components/mainStyle";
 import DivStyle from "../../components/divStyle";
 import Header from "../../components/Header";
 import Title from "../Title";
 import Trending from "../trending";
 import FollowButton from "../../components/FollowButton";
+import Posts from "../../components/Posts";
 
 export default function UserPosts() {
   const { auth } = useAuth();
@@ -62,10 +62,10 @@ export default function UserPosts() {
           <FollowButton userId={id} auth={auth} />
         </DivStyle>
         <MainStyle>
-          <PostsList isError={isError} posts={posts} />
-          <div>
-            <Trending />
-          </div>
+          <Column>
+            <Posts isError={isError} posts={posts} />
+          </Column>
+          <Trending />
         </MainStyle>
       </Container>
     );
