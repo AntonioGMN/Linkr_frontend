@@ -27,6 +27,7 @@ export default function Timeline() {
 		const promise = api.getPosts(auth.token);
 		promise.then((response) => setPosts(response.data));
 		promise.catch((err) => {
+			setPosts(null);
 			setIsError(true);
 			setErrorMessage(err.response.data);
 		});

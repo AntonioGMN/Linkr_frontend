@@ -14,6 +14,16 @@ const Snippet = styled.a`
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
+
+		/* Fix the same width for all snippets */
+		width: 348px;
+
+		p {
+			/* Treat snippet link overflow */
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 348px;
+		}
 	}
 
 	p {
@@ -42,6 +52,7 @@ const Snippet = styled.a`
 		height: 155px;
 
 		border-radius: 0px 12px 13px 0px;
+		object-fit: fill;
 	}
 
 	@media (max-width: 1000px) {

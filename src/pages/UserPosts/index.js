@@ -32,10 +32,13 @@ export default function UserPosts() {
     api
       .getPostsByUserId(id, auth.token)
       .then((response) => setPosts(response.data))
-      .catch(() => setIsError(true));
+      .catch(() => {
+        setPosts(null);
+        setIsError(true)
+      });
   }, [auth.token, id]);
 
-	if (posts === null || posts.length === 0) {
+	if (!posts || posts.length === 0) {
     return (
       <Container>
         <Header />
