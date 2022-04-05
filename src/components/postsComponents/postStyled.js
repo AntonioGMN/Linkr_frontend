@@ -1,5 +1,31 @@
 import styled from "styled-components";
 
+export const PostContainer = styled.div`
+	background-color: #1e1e1e;
+	border-radius: 16px;
+
+	.repost-label {
+		display: flex;
+		align-items: center;
+
+		width: 100%;
+		height: 33px;
+		padding: 0 13px;
+
+		font-size: 13px;
+
+		p {
+			margin-left: 5px;
+			color: white;
+		}
+
+		a {
+			font-weight: bold;
+			color: white;
+		}
+	}
+`;
+
 const PostStyle = styled.article`
 	position: relative;
 
@@ -16,6 +42,7 @@ const PostStyle = styled.article`
 		height: 50px;
 		border-radius: 50px;
 		margin-bottom: 15px;
+		object-fit: cover;
 	}
 
 	div {
