@@ -68,12 +68,12 @@ Para utilizar essa API, será necessário ter na sua máquina as seguintes ferra
 Além disso recomendo fortemente a utilização de um bom ter um editor de código, como o [VSCode](https://code.visualstudio.com/)!
 
 ### Instalando a API
-Seguir os passos descritos na seção de [instalação da nossa API](https://github.com/TiagoVota/linkr-api/blob/main/README.md).
+Seguir os passos descritos na seção de [instalação da nossa API](https://github.com/leonardo-otero390/Linkr_backend).
 
 ### Instalando o app
 ```bash
 # Clone este repositório
-git clone https://github.com/TiagoVota/linkr
+git clone git@github.com:AntonioGMN/Linkr_frontend.git
 # Acesse a pasta do projeto no terminal/cmd
 cd linkr
 # Instale as dependências
