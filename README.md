@@ -6,7 +6,7 @@ Sabe aquele link que não basta deixar salvo nos favoritos? Vem com Linkr e bora
 	<img alt='linkr usage GIF' src="/public/assets/linkr-usage.gif" />
 </p>
 
-Corra para checar o site agora mesmo: https://linkr-black.vercel.app/
+Corra para checar o site agora mesmo: [https://linkr-black.vercel.app/](https://linkr-rust.vercel.app/)
 
 <br/>
 
